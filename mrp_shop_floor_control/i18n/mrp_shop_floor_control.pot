@@ -1,0 +1,1205 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_shop_floor_control
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-28 16:07+0000\n"
+"PO-Revision-Date: 2022-02-28 16:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "<span>hours</span>"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "<span>minutes</span>"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid ""
+"<strong attrs=\"{'invisible': [('date_actual_finished_wo', '=', False)]}\" "
+"class=\"mr8\">to</strong>"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid ""
+"<strong attrs=\"{'invisible': [('date_planned_finished_pivot', '=', "
+"False)]}\" class=\"mr8\">to</strong>"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid ""
+"<strong attrs=\"{'invisible': [('date_planned_finished_wo', '=', False)]}\" "
+"class=\"mr8\">to</strong>"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__active
+msgid "Active"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Actual Dates"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__date_actual_finished_wo
+msgid "Actual End Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Actual Scheduled Dates"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__date_actual_start_wo
+msgid "Actual Start Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Actual Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_floating_times.py:0
+#, python-format
+msgid "Another Floating Times record exists in the same warehouse: %s"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__bom_product_template_attribute_value_ids
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__bom_product_template_attribute_value_ids
+msgid "Apply on Variants"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_capacity_filter
+msgid "Archived"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workcenter.py:0
+#, python-format
+msgid "Attachments"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_bom.py:0
+#, python-format
+msgid "BOM"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.report,name:mrp_shop_floor_control.action_report_mrp_bom_structure_all
+msgid "BOM All Levels"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.report,name:mrp_shop_floor_control.action_report_mrp_bom_structure_one
+msgid "BOM One Level"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields.selection,name:mrp_shop_floor_control.selection__mrp_production__planning_mode__b
+msgid "Backward"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_create_bom_multilevel.py:0
+#, python-format
+msgid "BoM %r"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__bom_id1
+msgid "BoM 1"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__bom_id2
+msgid "BoM 2"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_compare_bom.py:0
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.view_mrp_compare_bom_form
+#, python-format
+msgid "BoM Comparison"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_bom_differences_form
+msgid "BoM Differences"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__bom_line_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__bom_line_id
+msgid "BoM Line"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__type_id1
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__type_id2
+msgid "BoM Type"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.mrp_compare_bom_action
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_bom_comparison
+msgid "BoMs Comparison"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_starting_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.set_date_wizard_form
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.view_mrp_compare_bom_form
+msgid "Cancel"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Capacity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "Capacity Check"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "Capacity Elaluation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__capacity_item_all_ids
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__capacity_item_ids
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "Capacity Items"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_view
+msgid "Capacity Load"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+msgid "Capacity UoM"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__check_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__check_id
+msgid "Check"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_bom_differences_form
+msgid "Close"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__company_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__company_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__company_id
+msgid "Company"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.view_mrp_compare_bom_form
+msgid "Compare BoMs"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__compare_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__compare_id
+msgid "Comparison ID"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.set_date_wizard_form
+msgid "Confirm dialog"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.actions.act_window,help:mrp_shop_floor_control.mrp_production_action
+msgid "Consume"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__create_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__create_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "Creates a new serial/lot number"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Dates"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.bom_structure_all
+msgid "Description"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_compare_bom.py:0
+#, python-format
+msgid "Differences in BoMs"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__display_name
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_view
+msgid "Documents"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workcenter_productivity.py:0
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_productivity__duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__duration
+#, python-format
+msgid "Elapsed"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__date_end
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_actual_finished_wo
+msgid "End Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,help:mrp_shop_floor_control.field_mrp_confirmation__tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__mrp_ftap_time
+msgid "Floating Time After Production (Hours)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__mrp_ftbp_time
+msgid "Floating Time Before Production (Hours)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_floating_times.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "Floating Times record has not been created yet for the warehouse: %s"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields.selection,name:mrp_shop_floor_control.selection__mrp_production__planning_mode__f
+msgid "Forward"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__hours_uom
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter__hours_uom
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__hours_uom
+msgid "Hours"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,help:mrp_shop_floor_control.field_mrp_compare_bom__product_id1
+#: model:ir.model.fields,help:mrp_shop_floor_control.field_mrp_compare_bom__product_id2
+msgid ""
+"If a product variant is defined the BOM is available only for this product."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__indicator
+msgid "Indicator"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#, python-format
+msgid "It is not possible to produce more than %s"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#, python-format
+msgid "It is not possible to produce more than production order quantity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#, python-format
+msgid "It is not possible to start workorder without components availability"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__item1notin2
+msgid "Item1Notin2"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__item2notin1
+msgid "Item2Notin1"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__is_scheduled
+msgid "Its Operations are Scheduled"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity____last_update
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__write_uid
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__write_date
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.view_mrp_production_workorder_form_view_filter_enhanced
+msgid "Late"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.bom_structure_all
+msgid "Level"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "Loading %"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__final_lot_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__lot_producing_id
+msgid "Lot/Serial Number"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_compare_bom
+msgid "MRP BoM Comparison"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_bom_item1
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_bom_item2
+msgid "MRP BoM Item 1 Comparison"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_capacity_check
+msgid "MRP Capacity Check"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_capacity_check_allitem
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_capacity_check_item
+msgid "MRP Capacity Check Item"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_confirmation
+msgid "MRP Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.mrp_floating_times_action
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_floating_times
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_mrp_floating_times
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.view_mrp_floating_times_tree
+msgid "MRP Floating Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_starting
+msgid "MRP Starting"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:res.groups,name:mrp_shop_floor_control.group_mrp_confirmation
+msgid "Manage Classical MRP Workorder Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check__production_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__production_id
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__qty_production
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__qty_production
+msgid "Manufacturing Order Qty"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder_midpointscheduling.py:0
+#, python-format
+msgid "Manufacturing Order not scheduled yet"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.mrp_production_action
+msgid "Manufacturing Orders"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.action_set_date_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.set_date_wizard_form
+msgid "Mid Point Scheduling"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_set_date_wizard
+msgid "Mid Point Scheduling Wizard"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_routing_workcenter.py:0
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__milestone
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_routing_workcenter__milestone
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__milestone
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__milestone
+#, python-format
+msgid "Milestone"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__monday
+msgid "Monday"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder_midpointscheduling.py:0
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__new_date_planned_start_wo
+#, python-format
+msgid "New Scheduled Start Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter__start_without_stock
+msgid "No Availability Check"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workcenter.py:0
+#, python-format
+msgid "No capacity load detected."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.actions.act_window,help:mrp_shop_floor_control.mrp_production_action
+msgid "No manufacturing order found. Let's create one."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter__doc_count
+msgid "Number of attached documents"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__week_nro
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__week_nro
+msgid "Original Week Number"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "Overall Capacity Load"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__overall_duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_productivity__overall_duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__overall_duration
+msgid "Overall Duration"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__act_overall_time
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__std_overall_time
+msgid "Overall Time"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__date_planned
+msgid "Planned Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Planned Dates"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_planned_finished_pivot
+msgid "Planned End Pivot Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_planned_start_pivot
+msgid "Planned Start Pivot Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__planned_duration_expected
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Planned Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__planning_mode
+msgid "Planning Mode"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "Please check planned pivot dates."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__qty_output_prev_wo
+msgid "Previous WO Quantity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__prev_work_order_id
+msgid "Previous Work Order"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__product_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__product_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__product_tmpl_id1
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__product_tmpl_id2
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__product_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__product_id
+msgid "Product"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.bom_structure_all
+msgid "Product Code"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__product_id1
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_compare_bom__product_id2
+msgid "Product Variant"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_production
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__production_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__production_id
+msgid "Production Order"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.bom_structure_all
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+msgid "Qty"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Quantities"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__product_qty
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__product_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "Quantity Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_confirmation.py:0
+#, python-format
+msgid "Quantity has to be positive"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,help:mrp_shop_floor_control.field_mrp_production__origin
+msgid ""
+"Reference of the document that generated this production order request."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__mrp_release_time
+msgid "Release Time (Hours)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_report_mrp_shop_floor_control_bom_structure_all
+msgid "Report Bom All Structure"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_report_mrp_shop_floor_control_bom_structure_one
+msgid "Report Bom Structure"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__product_qty
+msgid "Required Quantity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__user_id
+msgid "Responsible"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_create_bom_multilevel.py:0
+#, python-format
+msgid "Result"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Schedule WOs"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_workorder_form_view_inherit
+msgid "Scheduled Dates"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_planned_finished_wo
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__date_planned_finished_wo
+msgid "Scheduled End Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_planned_start_wo
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__date_planned_start_wo
+msgid "Scheduled Start Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__setup_duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_productivity__setup_duration
+msgid "Setup Duration"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_view
+msgid "Shop Floor Control"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__origin
+msgid "Source"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Standard Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__date_start
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__date_actual_start_wo
+msgid "Start Date"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__sunday
+msgid "Sunday"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__teardown_duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_productivity__teardown_duration
+msgid "Teardown Duration"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,help:mrp_shop_floor_control.field_mrp_floating_times__company_id
+msgid "The company is automatically set from your user preferences."
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "Time Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+msgid "Total Capacity Requirements"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__act_teardown_time
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__std_teardown_time
+msgid "Total Cleanup Time"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__act_setup_time
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__std_setup_time
+msgid "Total Setup Time"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__act_working_time
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__std_working_time
+msgid "Total Working Time"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__tracking
+msgid "Tracking"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item1__product_uom_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_bom_item2__product_uom_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__product_uom_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__product_uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_production__unplanned_duration_expected
+msgid "Unplanned Times"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "Unschedule WOs"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.bom_structure_all
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+msgid "UoM"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__user_id
+msgid "User"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__wc_capacity_load
+msgid "WC Capacity Load %"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__wc_daily_available_capacity_cal
+msgid "WC Dayly Available Capacity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "WC Remaining (H)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__wc_remaining_capacity
+msgid "WC Remaining Capacity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "WC Weekly Available (H)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__wc_available_capacity_cal
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__wc_available_capacity_cal
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__wc_available_capacity_cal
+msgid "WC Weekly Available Capacity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__wo_capacity_requirements
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__wo_capacity_requirements
+msgid "WO Capacity Requirements"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__wo_capacity_requirements
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__wo_capacity_requirements
+msgid "WO Capacity Requirements (Hours)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "WO Confirm"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_mrp_confirmation
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+msgid "WO Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__qty_output_wo
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workorder__qty_output_wo
+msgid "WO Quantity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_capacity_check_view_form
+msgid "WO Requirements (H)"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_starting_view
+msgid "WO Start"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_mrp_starting
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_production_form_view
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_starting_view
+msgid "WO Starting"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_stock_warehouse
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_floating_times__warehouse_id
+msgid "Warehouse"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__week_nro_2
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__week_nro_2
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__week_nro
+msgid "Week Number"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_workcenter
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_allitem__workcenter_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_capacity_check_item__workcenter_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__workcenter_id
+msgid "Work Center"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_workcenter_capacity
+msgid "Work Center Capacity"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_workorder
+msgid "Work Order"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.action_mrp_confirmation
+msgid "Work Order Confirmation"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.action_mrp_starting
+msgid "Work Order Starting"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workorder_capacity_leveling_tree
+msgid "Work Orders"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_capacity__workorder_id
+msgid "WorkOrder"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter__capacity_chart
+msgid "Workcenter Capacity Chart"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_capacity_check.py:0
+#, python-format
+msgid "Workcenter Capacity Elaluations"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.mrp_workcenter_capacity_action
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_mrp_workcenter_capacity
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_capacity_graph
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_workcenter_capacity_pivot
+msgid "Workcenter Capacity Evaluations"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workcenter.py:0
+#, python-format
+msgid "Workcenter Code already exists"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workcenter.py:0
+#, python-format
+msgid "Workcenter Name already exists"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model,name:mrp_shop_floor_control.model_mrp_workcenter_productivity
+msgid "Workcenter Productivity Log"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_stock_warehouse__calendar_id
+msgid "Working Calendar"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__working_duration
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_workcenter_productivity__working_duration
+msgid "Working Duration"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_confirmation__workorder_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_mrp_starting__workorder_id
+#: model:ir.model.fields,field_description:mrp_shop_floor_control.field_set_date_wizard__workorder_id
+msgid "Workorder"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model:ir.actions.act_window,name:mrp_shop_floor_control.mrp_workorder_capacity_leveling
+#: model:ir.ui.menu,name:mrp_shop_floor_control.menu_mrp_capacity_leveling
+msgid "Workorder Capacity Leveling"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.actions.act_window,help:mrp_shop_floor_control.mrp_production_action
+msgid "and build finished products using"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder_midpointscheduling.py:0
+#, python-format
+msgid "backward scheduling is not possible for the production order %r"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.actions.act_window,help:mrp_shop_floor_control.mrp_production_action
+msgid "bills of materials"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.actions.act_window,help:mrp_shop_floor_control.mrp_production_action
+msgid "components"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder_midpointscheduling.py:0
+#, python-format
+msgid "midpoint scheduling cannot be performed for workorder in progress"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: model_terms:ir.ui.view,arch_db:mrp_shop_floor_control.mrp_confirmation_view
+msgid "minutes"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_routing_workcenter.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_routing_workcenter.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#, python-format
+msgid "no parallel operation is allowed for milestone"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "pickings not yet processed, please close or cancel them"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#: code:addons/mrp_shop_floor_control/wizards/mrp_starting.py:0
+#, python-format
+msgid "previous workorders in progress"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/wizards/mrp_starting.py:0
+#, python-format
+msgid "previous workorders not closed or calcelled"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_workorder.py:0
+#, python-format
+msgid "previous workorders not yet closed or cancelled"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "workorder still running, please close it"
+msgstr ""
+
+#. module: mrp_shop_floor_control
+#: code:addons/mrp_shop_floor_control/models/mrp_production.py:0
+#, python-format
+msgid "workorders not yet processed, please close them before"
+msgstr ""

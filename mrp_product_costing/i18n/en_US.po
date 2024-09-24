@@ -1,0 +1,558 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_product_costing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-05 10:06+0000\n"
+"PO-Revision-Date: 2021-11-05 10:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Journal for collecting manufacturing accounting"
+" postings:</span>"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">The following accounts are used for direct cost"
+" postings:</span>"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">The following accounts are used for variances "
+"cost postings:</span>"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.actions.act_window,name:mrp_product_costing.action_mrp_account_moves
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_account_moves_production_order_tree
+msgid "Account Moves"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__by_product_amount
+msgid "Actual ByProduct Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__by_product_amount_unit
+msgid "Actual ByProduct Unit Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__mat_cost
+msgid "Actual Components Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__mat_cost_unit
+msgid "Actual Components Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Actual Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__fixed_cost
+msgid "Actual Direct Fixed Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__fixed_cost_unit
+msgid "Actual Direct Fixed Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__var_cost
+msgid "Actual Direct Variable Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__var_cost_unit
+msgid "Actual Direct Variable Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__direct_cost
+msgid "Actual Full Direct Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__direct_cost_unit
+msgid "Actual Full Direct Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Actual Unit Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workcenter__analytic_account_id
+msgid "Analytic Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_account_analytic_line_production_order_tree
+msgid "Analytic Entries"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_account_analytic_line
+msgid "Analytic Line"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.actions.act_window,name:mrp_product_costing.action_mrp_analytic_lines
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Analytic Lines"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_report_mrp_report_bom_structure
+msgid "BOM Structure Report"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_mrp_bom
+msgid "Bill of Material"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Byproduct Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Closure"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Components"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__material_variances_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__material_variances_account_id
+msgid "Components Variance Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_bom__costs_material_variances_analytic_account_id
+msgid "Components Variance Costs Analytic Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_bom_view
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_workcenter_view
+msgid "Costing Data"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__currency_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workcenter__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_prod_cost
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Current Standard Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Delta"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__delta_byproduct
+msgid "Delta ByProduct Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__delta_mat_cost
+msgid "Delta Components Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__delta_direct_cost
+msgid "Delta Direct Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__delta_fixed_cost
+msgid "Delta Direct Fixed Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__delta_var_cost
+msgid "Delta Direct Variable Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workorder__direct_cost
+msgid "Direct Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_workcenter_view
+msgid "Direct Cost Analytic Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_workcenter_view
+msgid "Direct Cost Rates"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__other_variances_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__other_variances_account_id
+msgid "Direct Variance Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_bom__costs_direct_variances_analytic_account_id
+msgid "Direct Variance Costs Analytic Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Fin. Closed"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Fin. Open"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__closure_state
+msgid "Financial Closure"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Fixed Direct"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Full Direct"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Group By..."
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workcenter__costs_hour
+msgid "Hourly Direct Cost Rate"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workcenter__costs_hour_fixed
+msgid "Hourly Fixed Direct Cost Rate"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__labour_fixed_cost_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__labour_fixed_cost_account_id
+msgid "Labour Fixed Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__labour_cost_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__labour_cost_account_id
+msgid "Labour Variable Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.res_config_settings_view_form
+msgid "MRP Product Costing"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields.selection,name:mrp_product_costing.selection__mrp_workcenter__wc_type__m
+msgid "Machine"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__machine_run_fixed_cost_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__machine_run_fixed_cost_account_id
+msgid "Machine Run Fixed Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__machine_run_cost_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__machine_run_cost_account_id
+msgid "Machine Run Variable Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields.selection,name:mrp_product_costing.selection__mrp_workcenter__wc_type__h
+msgid "Man"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__manufacturing_journal_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__manufacturing_journal_id
+msgid "Manufacturing Journal"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_account_analytic_line__manufacture_order_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_account_bank_statement_line__manufacture_order_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_account_move__manufacture_order_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_account_payment__manufacture_order_id
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_byproduct_amount
+msgid "Planned ByProduct Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_byproduct_amount_unit
+msgid "Planned ByProduct Unit Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Planned Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_direct_cost
+msgid "Planned Direct Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_fixed_cost
+msgid "Planned Direct Fixed Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_fixed_cost_unit
+msgid "Planned Direct Fixed Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_direct_cost_unit
+msgid "Planned Direct Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_var_cost
+msgid "Planned Direct Variable Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_var_cost_unit
+msgid "Planned Direct Variable Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_mat_cost
+msgid "Planned Material Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__planned_mat_cost_unit
+msgid "Planned Material Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Planned Unit Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_company__planned_variances_account_id
+#: model:ir.model.fields,field_description:mrp_product_costing.field_res_config_settings__planned_variances_account_id
+msgid "Planned Variance Cost Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_bom__costs_planned_variances_analytic_account_id
+msgid "Planned Variance Costs Analytic Account"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_product_product
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Product"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.actions.act_window,name:mrp_product_costing.product_costing_action
+#: model:ir.ui.menu,name:mrp_product_costing.menu_product_costing
+msgid "Product Costing"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Production Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_mrp_production
+msgid "Production Order"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_activity
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_graph
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_pivot
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_tree
+msgid "Production Orders"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Production Unit Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_account_analytic_line_production_order_tree
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_tree
+msgid "Quantity"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Search Production"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,help:mrp_product_costing.field_mrp_workcenter__costs_hour
+msgid "Specify cost of work center per hour."
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_byproduct_amount
+msgid "Standard ByProduct Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Standard Costs"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_fixed_cost
+msgid "Standard Direct Fixed Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_direct_cost
+msgid "Standard Direct Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_var_cost
+msgid "Standard Direct Variable Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__std_mat_cost
+msgid "Standard Material Unit Cost"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_filter
+msgid "Starred"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_account_analytic_line_production_order_tree
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_account_moves_production_order_tree
+msgid "Total"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.view_product_costing_tree
+msgid "UoM"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "Variable Direct"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_bom_view
+msgid "Variances Analysis"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_production__wip_amount
+#: model_terms:ir.ui.view,arch_db:mrp_product_costing.mrp_production_costing_figures_form_view
+msgid "WIP Amount"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_mrp_workcenter
+msgid "Work Center"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model.fields,field_description:mrp_product_costing.field_mrp_workcenter__wc_type
+msgid "Work Center Type"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.ui.menu,name:mrp_product_costing.menu_workcenter
+msgid "Work Centers"
+msgstr ""
+
+#. module: mrp_product_costing
+#: model:ir.model,name:mrp_product_costing.model_mrp_workorder
+msgid "Work Order"
+msgstr ""
