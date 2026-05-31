@@ -4,7 +4,7 @@
 {
   'name': 'MRP Product Costing',
   'summary': 'MRP Product Costing',
-  'version': '16.3.2.1',
+  'version': '19.0.1.0.0',
   'category': 'Manufacturing',
   'website': 'www.openvalue.cloud',
   'author': "OpenValue",

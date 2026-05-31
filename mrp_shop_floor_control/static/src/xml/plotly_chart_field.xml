@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="mrp_shop_floor_control.PlotlyChartField">
+        <div class="o_sfc_plotly_chart" style="width:100%;min-height:400px;" t-ref="chart"/>
+    </t>
+</templates>

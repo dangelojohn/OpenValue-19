@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workcenter_load_list" model="ir.ui.view">
+        <field name="name">mrp.workcenter.load.list</field>
+        <field name="model">mrp.workcenter.load</field>
+        <field name="arch" type="xml">
+            <list string="Work Center Capacity Load" create="0" edit="0">
+                <field name="workcenter_id"/>
+                <field name="workorder_id"/>
+                <field name="production_id"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="product_uom_id"/>
+                <field name="date_planned"/>
+                <field name="week_nro"/>
+                <field name="wo_capacity_requirements" sum="Total Capacity Requirements"/>
+                <field name="wc_available_capacity"/>
+                <field name="wc_daily_available_capacity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_load_pivot" model="ir.ui.view">
+        <field name="name">mrp.workcenter.load.pivot</field>
+        <field name="model">mrp.workcenter.load</field>
+        <field name="arch" type="xml">
+            <pivot string="Work Center Capacity Load">
+                <field name="date_planned" interval="week" type="col"/>
+                <field name="workcenter_id" type="row"/>
+                <field name="wc_available_capacity" type="measure"/>
+                <field name="wo_capacity_requirements" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_load_graph" model="ir.ui.view">
+        <field name="name">mrp.workcenter.load.graph</field>
+        <field name="model">mrp.workcenter.load</field>
+        <field name="arch" type="xml">
+            <graph string="Work Center Capacity Load" type="line">
+                <field name="date_planned" interval="week"/>
+                <field name="workcenter_id"/>
+                <field name="wc_available_capacity" type="measure"/>
+                <field name="wo_capacity_requirements" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_load_search" model="ir.ui.view">
+        <field name="name">mrp.workcenter.load.search</field>
+        <field name="model">mrp.workcenter.load</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="workcenter_id"/>
+                <field name="production_id"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Work Center" name="group_workcenter" context="{'group_by': 'workcenter_id'}"/>
+                    <filter string="Week" name="group_week" context="{'group_by': 'week_nro'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_load_action" model="ir.actions.act_window">
+        <field name="name">Work Center Capacity Load</field>
+        <field name="res_model">mrp.workcenter.load</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="mrp_workcenter_load_search"/>
+    </record>
+
+    <menuitem id="menu_mrp_workcenter_load"
+              sequence="60"
+              parent="mrp.menu_mrp_reporting"
+              action="mrp_workcenter_load_action"
+              groups="mrp.group_mrp_user"/>
+</odoo>

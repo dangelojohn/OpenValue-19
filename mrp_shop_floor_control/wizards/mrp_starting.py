@@ -1,64 +1,62 @@
 # -*- coding: utf-8 -*-
 
-
-from odoo import models, fields, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-import datetime
-from odoo.tools import float_round
 
 
 class MrpStarting(models.TransientModel):
     _name = 'mrp.starting'
-    _description = "MRP Starting"
+    _description = "Work Order Starting"
 
-
-    production_id = fields.Many2one('mrp.production', 'Production Order', domain=[('picking_type_id.active', '=', True), ('workorder_ids', 'not in', []),('state', 'in', ('confirmed','progress'))])
-    workorder_id = fields.Many2one('mrp.workorder', "Workorder", domain="[('state', 'not in', ['progress','done','cancel']), ('production_id','=',production_id)]")
-    company_id = fields.Many2one('res.company', 'Company', required=True, default=lambda self: self.env.company)
+    production_id = fields.Many2one(
+        'mrp.production', 'Production Order',
+        domain=[('state', 'in', ('confirmed', 'progress')), ('workorder_ids', '!=', False)])
+    workorder_id = fields.Many2one(
+        'mrp.workorder', "Work Order",
+        domain="[('state', 'not in', ['progress', 'done', 'cancel']), "
+               "('production_id', '=', production_id)]")
+    company_id = fields.Many2one(
+        'res.company', 'Company', required=True, default=lambda self: self.env.company)
     milestone = fields.Boolean('Milestone', related='workorder_id.milestone')
-    date_start = fields.Datetime('Start Date', required=True, default=lambda self: fields.datetime.now())
+    date_start = fields.Datetime('Start Date', required=True, default=fields.Datetime.now)
 
     @api.model
-    def default_get(self, fields):
-        default = super().default_get(fields)
-        active_id = self.env.context.get('active_id', False)
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        active_id = self.env.context.get('active_id')
         if active_id:
-            default['production_id'] = active_id
-        return default
+            defaults['production_id'] = active_id
+        return defaults
 
     @api.onchange('production_id')
-    def onchange_production_id(self):
-        workorder_domain = [('state', 'not in', ['done', 'cancel', 'progress'])]
-        if self.production_id:
-            workorder_domain += [('production_id', '=', self.production_id.id)]
-            workorder_ids = self.env['mrp.workorder'].search(workorder_domain)
-            if workorder_ids:
-                if self.workorder_id and self.workorder_id.id not in workorder_ids.ids:
-                    self.workorder_id = False
+    def _onchange_production_id(self):
+        if self.production_id and self.workorder_id.production_id != self.production_id:
+            self.workorder_id = False
 
     def do_starting(self):
-        workorders = self.workorder_id.production_id.workorder_ids
-        wo_sequence = self.workorder_id.sequence
-        prev_workorders = [x for x in workorders if x.sequence < wo_sequence]
-        if self.workorder_id.milestone:
-            if any(prev_workorder.state == 'progress' for prev_workorder in prev_workorders):
-                raise UserError(_('previous workorders in progress'))
-            for prev_workorder in prev_workorders:
-                if prev_workorder.state in ('ready','pending','waiting'):
-                    prev_workorder.state = 'cancel'
-                wo_capacity_id = self.env['mrp.workcenter.capacity'].search([('workorder_id', '=', prev_workorder.id)],limit=1)
-                if wo_capacity_id:
-                    wo_capacity_id.unlink()
-            self._set_wo_inprogress(self.workorder_id)
-        else:
-            if any(prev_workorder.state not in  ('done','cancel') for prev_workorder in prev_workorders):
-                raise UserError(_('previous workorders not closed or calcelled'))
-            self._set_wo_inprogress(self.workorder_id)
+        self.ensure_one()
+        workorder = self.workorder_id
+        if not workorder:
+            raise UserError(_('Please select a work order.'))
+        prev = workorder.production_id.workorder_ids.filtered(
+            lambda w: w.sfc_sequence < workorder.sfc_sequence)
+        if workorder.milestone:
+            if any(w.state == 'progress' for w in prev):
+                raise UserError(_('A preceding work order is in progress.'))
+            for prev_wo in prev:
+                if prev_wo.state in ('ready', 'pending', 'waiting'):
+                    prev_wo.state = 'cancel'
+                self.env['mrp.workcenter.load'].search(
+                    [('workorder_id', '=', prev_wo.id)]).unlink()
+        elif any(w.state not in ('done', 'cancel') for w in prev):
+            raise UserError(_('Preceding work orders are not closed or cancelled.'))
+        self._set_workorder_in_progress(workorder)
         return True
 
-    def _set_wo_inprogress(self, workorder):
+    def _set_workorder_in_progress(self, workorder):
         workorder.button_start()
-        time_id = self.env['mrp.workcenter.productivity'].search([('workorder_id','=', workorder.id),('date_end','=',False)], limit=1)
-        if time_id:
-            time_id.date_start = self.date_start
+        time_record = self.env['mrp.workcenter.productivity'].search(
+            [('workorder_id', '=', workorder.id), ('date_end', '=', False)], limit=1)
+        if time_record:
+            time_record.date_start = self.date_start
         return True

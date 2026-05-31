@@ -6,7 +6,7 @@
         <field name="model">mrp.production</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <tree string="Production Orders" create="false">
+            <list string="Production Orders" create="false">
                 <field name="name"/>
                 <field name="product_id"/>
                 <field name="product_qty" string="Quantity"/>
@@ -20,8 +20,8 @@
                 <field name="currency_id" invisible="True"/>
                 <field name="state" invisible="True"/>
                 <field name="closure_state"/>
-                <button name="button_closure" type="object" string="Closure" attrs="{'invisible': [('closure_state', '=', True)]}" class="oe_highlight"/>
-            </tree>
+                <button name="button_closure" type="object" string="Closure" invisible="closure_state" class="oe_highlight"/>
+            </list>
         </field>
     </record>
 
@@ -81,8 +81,8 @@
                 <field name="product_id"/>
                 <field name="origin"/>
                 <filter string="Starred" name="starred" domain="[('priority', '=', '1')]"/>
-                <filter string="Fin. Closed" name="closed" domain="[('closure_state', '=', '1')]"/>
-                <filter string="Fin. Open" name="open" domain="[('closure_state', '!=', '1')]"/>
+                <filter string="Fin. Closed" name="closed" domain="[('closure_state', '=', True)]"/>
+                <filter string="Fin. Open" name="open" domain="[('closure_state', '=', False)]"/>
                 <group expand="0" string="Group By...">
                     <filter string="Product" name="product" domain="[]" context="{'group_by': 'product_id'}"/>
                 </group>
@@ -94,14 +94,14 @@
         <field name="name">Product Costing</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">mrp.production</field>
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">list,form,pivot,graph</field>
         <field name="search_view_id" ref="view_product_costing_filter"/>
         <field name="domain">[('state','=','done')]</field>
     </record>
     
     <record model="ir.actions.act_window.view" id="product_costing_tree_link">
         <field name="sequence" eval="1"/>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="view_product_costing_tree"/>
         <field name="act_window_id" ref="product_costing_action"/>
     </record>

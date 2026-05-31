@@ -1,47 +1,51 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
 class MrpFloatingTimes(models.Model):
-    _name = "mrp.floating.times"
-    _description = "MRP Floating Times"
+    _name = 'mrp.floating.times'
+    _description = 'MRP Floating Times'
 
-    warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse', required=True, domain="[('manufacture_to_resupply', '=', 'True')]")
-    company_id = fields.Many2one("res.company", "Company", related="warehouse_id.company_id", readonly=True)
+    # NB: stock.warehouse.manufacture_to_resupply is a non-stored computed field
+    # in Odoo 19, so it cannot be used in a (SQL) domain here.
+    warehouse_id = fields.Many2one(
+        'stock.warehouse', 'Warehouse', required=True)
+    company_id = fields.Many2one(
+        'res.company', 'Company', related='warehouse_id.company_id',
+        store=True, readonly=True)
     mrp_release_time = fields.Float("Release Time (Hours)", default=1.0)
     mrp_ftbp_time = fields.Float("Floating Time Before Production (Hours)", default=1.0)
     mrp_ftap_time = fields.Float("Floating Time After Production (Hours)", default=1.0)
 
-    @api.constrains('warehouse_id')
-    def _check_same_warehouse(self):
-        for record in self:
-            ft_ids = self.env['mrp.floating.times'].search([('warehouse_id', '=', record.warehouse_id.id)])
-            if len(ft_ids) > 1:
-                raise UserError(_('Another Floating Times record exists in the same warehouse: %s')% record.warehouse_id.name)
-        return True
+    _sql_constraints = [
+        ('warehouse_uniq', 'unique(warehouse_id)',
+         'A Floating Times record already exists for this warehouse.'),
+    ]
 
+    @api.model
     def create_floating_times(self):
-        warehouses = self.env['stock.warehouse'].with_context(active_test=False).search([('manufacture_to_resupply', '=', True)])
-        for warehouse in warehouses:
-            self.create({
-                'warehouse_id': warehouse.id,
-                'mrp_release_time': 1.0,
-                'mrp_ftbp_time': 1.0,
-                'mrp_ftap_time': 1.0,
-            })
+        """Create a default Floating Times record for every manufacturing
+        warehouse that does not have one yet (idempotent)."""
+        warehouses = self.env['stock.warehouse'].with_context(active_test=False).search(
+            []).filtered('manufacture_to_resupply')
+        existing = set(self.search([]).mapped('warehouse_id').ids)
+        vals = [{
+            'warehouse_id': warehouse.id,
+            'mrp_release_time': 1.0,
+            'mrp_ftbp_time': 1.0,
+            'mrp_ftap_time': 1.0,
+        } for warehouse in warehouses if warehouse.id not in existing]
+        if vals:
+            self.create(vals)
         return True
 
-
-class MrpProduction(models.Model):
-    _inherit = 'mrp.production'
-
-
-    def action_confirm(self):
-        res = super().action_confirm()
-        for production in self:
-            floating_times_id = self.env['mrp.floating.times'].search([('warehouse_id', '=', production.picking_type_id.warehouse_id.id)])
-            if not floating_times_id:
-                raise UserError(_('Floating Times record has not been created yet for the warehouse: %s')% production.picking_type_id.warehouse_id.name)
-        return res
+    @api.model
+    def _get_for_warehouse(self, warehouse):
+        record = self.search([('warehouse_id', '=', warehouse.id)], limit=1)
+        if not record:
+            raise UserError(_(
+                'No Floating Times record has been configured for the '
+                'warehouse: %s', warehouse.display_name or warehouse.name))
+        return record

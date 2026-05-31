@@ -8,12 +8,12 @@
         <field name="arch" type="xml">
             <button name="%(mrp.action_report_mrp_bom)d" position="replace"/>
             <notebook>
-                <page string="Costing Data" name="costing_data" attrs="{'invisible': [('type','!=', 'normal')]}">
+                <page string="Costing Data" name="costing_data" invisible="type != 'normal'">
                     <group string='Variances Analysis'>
                         <group >
-                            <field name="costs_planned_variances_analytic_account_id" groups="analytic.group_analytic_accounting" attrs="{'required': [('type','=', 'normal')]}"/>
-                            <field name="costs_material_variances_analytic_account_id" groups="analytic.group_analytic_accounting" attrs="{'required': [('type','=', 'normal')]}"/>
-                            <field name="costs_direct_variances_analytic_account_id" groups="analytic.group_analytic_accounting" attrs="{'required': [('type','=', 'normal')]}"/>
+                            <field name="costs_planned_variances_analytic_account_id" groups="analytic.group_analytic_accounting" required="type == 'normal'"/>
+                            <field name="costs_material_variances_analytic_account_id" groups="analytic.group_analytic_accounting" required="type == 'normal'"/>
+                            <field name="costs_direct_variances_analytic_account_id" groups="analytic.group_analytic_accounting" required="type == 'normal'"/>
                         </group>
                         <group>
                         </group>
@@ -22,17 +22,17 @@
                         <group >
                             <label for="costs_overhead_product_percentage" string="Finished Product percentage"/>
                             <div class="o_row">
-                                <field name="costs_overhead_product_percentage" attrs="{'required': [('type','=', 'normal')]}"/>
+                                <field name="costs_overhead_product_percentage" required="type == 'normal'"/>
                                 %
                             </div>
                             <label for="costs_overhead_components_percentage" string="Components percentage"/>
                             <div class="o_row">
-                                <field name="costs_overhead_components_percentage" attrs="{'required': [('type','=', 'normal')]}"/>
+                                <field name="costs_overhead_components_percentage" required="type == 'normal'"/>
                                 %
                             </div>
                         </group>
                         <group>
-                            <field name="overhead_analytic_account_id" groups="analytic.group_analytic_accounting" attrs="{'required': [('type','=', 'normal')]}"/>
+                            <field name="overhead_analytic_account_id" groups="analytic.group_analytic_accounting" required="type == 'normal'"/>
                         </group>
                     </group>
                 </page>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
     <record id="mrp_starting_view" model="ir.ui.view">
-        <field name="name">mrp.starting.view</field>
+        <field name="name">mrp.starting.form</field>
         <field name="model">mrp.starting</field>
         <field name="arch" type="xml">
-            <form>
-                <group string="WO Starting">
+            <form string="WO Starting">
+                <group>
                     <group>
-                        <field name="production_id" required="1" widget="selection"/>
-                        <field name="workorder_id" required="1" widget="selection"/>
+                        <field name="production_id" required="1"/>
+                        <field name="workorder_id" required="1"/>
                         <field name="date_start"/>
                         <field name="company_id" invisible="1"/>
                     </group>
@@ -19,7 +18,7 @@
                 </group>
                 <footer>
                     <button name="do_starting" type="object" string="WO Start" class="oe_highlight"/>
-                    <button string="Cancel" special="cancel"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
         </field>
@@ -31,14 +30,13 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="mrp_starting_view"/>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
         <field name="binding_view_types">form</field>
     </record>
 
-    <menuitem
-        name="WO Starting"
-        id="menu_mrp_starting"
-        action="action_mrp_starting"
-        parent="mrp.menu_mrp_manufacturing"
-        sequence="105"/>
+    <menuitem name="WO Starting"
+              id="menu_mrp_starting"
+              action="action_mrp_starting"
+              parent="mrp.menu_mrp_manufacturing"
+              sequence="105"/>
 </odoo>

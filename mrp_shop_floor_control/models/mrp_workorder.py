@@ -1,64 +1,59 @@
 # -*- coding: utf-8 -*-
 
-
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
 from datetime import datetime, timedelta
-from odoo.tools import float_compare, float_is_zero, float_round
+
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare, float_round
 
 
 class MrpWorkorder(models.Model):
     _inherit = 'mrp.workorder'
-    _order = 'production_id, sequence, duration_expected, id'
 
-    # Odoo Standard
-    qty_production = fields.Float('Manufacturing Order Qty')
-    # SFC
-    date_actual_start_wo = fields.Datetime('Actual Start Date', compute='_compute_dates_actual', store=True, copy=False)
-    date_actual_finished_wo = fields.Datetime('Actual End Date', compute='_compute_dates_actual', store=True, copy=False)
-    date_planned_start_wo = fields.Datetime('Scheduled Start Date', readonly=True, states={'waiting': [('readonly', False)],'ready': [('readonly', False)],'pending': [('readonly', False)]}, copy=False)
-    date_planned_finished_wo = fields.Datetime('Scheduled End Date', readonly=True, states={'waiting': [('readonly', False)],'ready': [('readonly', False)],'pending': [('readonly', False)]}, copy=False)
-    qty_output_wo = fields.Float('WO Quantity', digits='Product Unit of Measure', copy=False, readonly=True)
-    qty_output_prev_wo = fields.Float('Previous WO Quantity', digits='Product Unit of Measure', compute="_compute_prev_work_order")
-    prev_work_order_id = fields.Many2one('mrp.workorder', 'Previous Work Order', compute="_compute_prev_work_order")
-    milestone = fields.Boolean('Milestone', compute='_get_milestone',  store=True, readonly=True, states={'waiting': [('readonly', False)],'ready': [('readonly', False)],'pending': [('readonly', False)]}, copy=True)
-    sequence = fields.Integer('Sequence', compute='_get_sequence', store=True, readonly=True, states={'waiting': [('readonly', False)],'ready': [('readonly', False)],'pending': [('readonly', False)]}, copy=True)
+    # --- Shop Floor Control scheduling layer ----------------------------------
+    # These planned dates are an independent SFC scheduling layer.  We do NOT
+    # write the standard ``date_start`` / ``date_finished`` (which are coupled
+    # to ``leave_id`` and managed by Odoo's own planner) to avoid creating
+    # duplicate calendar leaves.
+    date_planned_start_wo = fields.Datetime('SFC Scheduled Start', copy=False)
+    date_planned_finished_wo = fields.Datetime('SFC Scheduled End', copy=False)
+    date_actual_start_wo = fields.Datetime(
+        'Actual Start Date', compute='_compute_dates_actual', store=True, copy=False)
+    date_actual_finished_wo = fields.Datetime(
+        'Actual End Date', compute='_compute_dates_actual', store=True, copy=False)
+
+    qty_output_wo = fields.Float(
+        'WO Quantity', digits='Product Unit', copy=False)
+    qty_output_prev_wo = fields.Float(
+        'Previous WO Quantity', digits='Product Unit', compute='_compute_prev_work_order')
+    prev_work_order_id = fields.Many2one(
+        'mrp.workorder', 'Previous Work Order', compute='_compute_prev_work_order')
+
+    milestone = fields.Boolean(
+        'Milestone', compute='_compute_milestone', store=True, readonly=False)
+    sfc_sequence = fields.Integer(
+        'SFC Sequence', compute='_compute_sfc_sequence', store=True, readonly=False,
+        help="Sequence used by Shop Floor Control. Operations sharing the same "
+             "SFC sequence run in parallel. Derived from the routing operation.")
     hours_uom = fields.Many2one('uom.uom', 'Hours', related='workcenter_id.hours_uom')
-    wo_capacity_requirements = fields.Float('WO Capacity Requirements', compute='_wo_capacity_requirement', store=True)
-    overall_duration = fields.Float('Overall Duration', compute='_compute_overall_duration', store=True)
+    wo_capacity_requirements = fields.Float(
+        'WO Capacity Requirements', compute='_compute_wo_capacity_requirements', store=True)
+    overall_duration = fields.Float(
+        'Overall Duration', compute='_compute_overall_duration', store=True)
 
-
-    def _get_duration_expected(self, alternative_workcenter=False, ratio=1):
-        self.ensure_one()
-        if not self.workcenter_id:
-            return self.duration_expected
-        if not self.operation_id:
-            duration_expected_working = (self.duration_expected - self.workcenter_id.time_start - self.workcenter_id.time_stop) * self.workcenter_id.time_efficiency / 100.0
-            if duration_expected_working < 0:
-                duration_expected_working = 0
-            return self.workcenter_id.time_start + self.workcenter_id.time_stop + duration_expected_working * ratio * 100.0 / self.workcenter_id.time_efficiency
-        qty_production = self.production_id.product_uom_id._compute_quantity(self.qty_production, self.production_id.product_id.uom_id)
-        cycle_number = float_round(qty_production / self.workcenter_id.capacity, precision_digits=0, rounding_method='UP')
-        #if alternative_workcenter:
-        #    duration_expected_working = (self.duration_expected - self.workcenter_id.time_start - self.workcenter_id.time_stop) * self.workcenter_id.time_efficiency / (100.0 * cycle_number)
-        #    if duration_expected_working < 0:
-        #        duration_expected_working = 0
-        #    alternative_wc_cycle_nb = float_round(qty_production / alternative_workcenter.capacity, precision_digits=0, rounding_method='UP')
-        #    return alternative_workcenter.time_start + alternative_workcenter.time_stop + alternative_wc_cycle_nb * duration_expected_working * 100.0 / alternative_workcenter.time_efficiency
-        time_cycle = self.operation_id.time_cycle
-        return self.workcenter_id.time_start + self.workcenter_id.time_stop + cycle_number * time_cycle * (100.0 / self.workcenter_id.time_efficiency) / self.production_id.bom_id.product_qty
-
-    @api.depends('operation_id')
-    def _get_milestone(self):
+    # --- Computes -------------------------------------------------------------
+    @api.depends('operation_id', 'operation_id.milestone')
+    def _compute_milestone(self):
         for workorder in self:
-            if workorder.operation_id and workorder.operation_id.milestone:
-                workorder.milestone = True
+            workorder.milestone = bool(workorder.operation_id.milestone)
 
-    @api.depends('operation_id')
-    def _get_sequence(self):
+    @api.depends('operation_id', 'operation_id.sequence')
+    def _compute_sfc_sequence(self):
         for workorder in self:
-            if workorder.operation_id and workorder.operation_id.sequence:
-                workorder.sequence = workorder.operation_id.sequence
+            if workorder.operation_id:
+                workorder.sfc_sequence = workorder.operation_id.sequence
+            elif not workorder.sfc_sequence:
+                workorder.sfc_sequence = workorder.sequence or 100
 
     @api.depends('time_ids.overall_duration')
     def _compute_overall_duration(self):
@@ -66,171 +61,256 @@ class MrpWorkorder(models.Model):
             workorder.overall_duration = sum(workorder.time_ids.mapped('overall_duration'))
 
     @api.depends('duration_expected')
-    def _wo_capacity_requirement(self):
+    def _compute_wo_capacity_requirements(self):
         for workorder in self:
-            workorder.wo_capacity_requirements = (workorder.duration_expected) / 60
+            workorder.wo_capacity_requirements = workorder.duration_expected / 60.0
 
-    @api.depends('state')
+    @api.depends('state', 'sfc_sequence', 'production_id.workorder_ids.qty_output_wo')
     def _compute_prev_work_order(self):
         for workorder in self:
-            prev_workorders = self.search([
-                ('production_id', '=', workorder.production_id.id),
-                ('sequence', '<', workorder.sequence),
-            ])
-            if prev_workorders:
-                prev_workorders_sorted = prev_workorders.sorted(key=lambda r: r.sequence, reverse=True)
-                workorder.prev_work_order_id = prev_workorders_sorted[0]
-                workorder.qty_output_prev_wo = workorder.prev_work_order_id.qty_output_wo
+            prev = workorder.production_id.workorder_ids.filtered(
+                lambda w: w.id != workorder.id and w.sfc_sequence < workorder.sfc_sequence)
+            if prev:
+                prev = prev.sorted(key=lambda w: w.sfc_sequence, reverse=True)[0]
+                workorder.prev_work_order_id = prev
+                workorder.qty_output_prev_wo = prev.qty_output_wo
             else:
                 workorder.prev_work_order_id = False
                 workorder.qty_output_prev_wo = workorder.production_id.product_qty
 
-    @api.constrains('milestone','sequence')
-    def ckeck_milestone(self):
+    @api.depends('time_ids', 'state')
+    def _compute_dates_actual(self):
         for workorder in self:
-            other_workorders = self.search([
-                ('production_id', '=', workorder.production_id.id),
-                ('id', '!=', workorder.id)])
-            if workorder.milestone:
-                milestone_sequence = workorder.sequence
-                if any(other_workorder.sequence == milestone_sequence for other_workorder in other_workorders):
-                    raise UserError(_('no parallel operation is allowed for milestone'))
-            else:
-                workorder_sequence = workorder.sequence
-                if any(other_workorder.sequence == workorder_sequence and other_workorder.milestone for other_workorder in other_workorders):
-                    raise UserError(_('no parallel operation is allowed for milestone'))
+            date_start = date_end = False
+            if workorder.state == 'done' and workorder.time_ids:
+                date_start = workorder.time_ids.sorted('date_start')[0].date_start
+                ended = workorder.time_ids.filtered('date_end')
+                if ended:
+                    date_end = ended.sorted('date_end')[-1].date_end
+            workorder.date_actual_start_wo = date_start
+            workorder.date_actual_finished_wo = date_end
 
-    def button_start(self):
+    # --- Constraints ----------------------------------------------------------
+    @api.constrains('milestone', 'sfc_sequence')
+    def _check_milestone(self):
         for workorder in self:
-            if workorder.qty_output_wo == 0.0:
-                if not workorder.prev_work_order_id:
-                    workorder.qty_output_wo = workorder.qty_production
-                else:
-                    workorder.qty_output_wo = workorder.qty_output_prev_wo
-            if any((float_compare(move.product_qty, move.forecast_availability, precision_rounding=move.product_id.uom_id.rounding) > 0 or move.forecast_expected_date) for move in workorder.production_id.move_raw_ids.filtered(lambda x: x.state not in ('done', 'cancel'))) and not workorder.workcenter_id.start_without_stock:
-                raise UserError(_('It is not possible to start workorder without components availability'))
-            workorder.workorder_start_checks()
-        return super().button_start()
+            siblings = workorder.production_id.workorder_ids.filtered(
+                lambda w: w.id != workorder.id and w.sfc_sequence == workorder.sfc_sequence)
+            if workorder.milestone and siblings:
+                raise ValidationError(_(
+                    "No parallel operation is allowed for a milestone work order."))
+            if siblings.filtered('milestone'):
+                raise ValidationError(_(
+                    "No parallel operation is allowed for a milestone work order."))
 
+    # --- Duration model -------------------------------------------------------
+    def _get_duration_expected(self, alternative_workcenter=False, ratio=1):
+        self.ensure_one()
+        if not self.workcenter_id:
+            return self.duration_expected
+        if not self.operation_id:
+            working = (self.duration_expected - self.workcenter_id.time_start
+                       - self.workcenter_id.time_stop) * self.workcenter_id.time_efficiency / 100.0
+            working = max(working, 0.0)
+            return (self.workcenter_id.time_start + self.workcenter_id.time_stop
+                    + working * ratio * 100.0 / self.workcenter_id.time_efficiency)
+        qty_production = self.production_id.product_uom_id._compute_quantity(
+            self.qty_production, self.production_id.product_id.uom_id)
+        capacity = self.workcenter_id._sfc_capacity(self.production_id.product_id) or 1.0
+        cycle_number = float_round(
+            qty_production / capacity, precision_digits=0, rounding_method='UP')
+        time_cycle = self.operation_id.time_cycle
+        bom_qty = self.production_id.bom_id.product_qty or 1.0
+        return (self.workcenter_id.time_start + self.workcenter_id.time_stop
+                + cycle_number * time_cycle * (100.0 / self.workcenter_id.time_efficiency) / bom_qty)
+
+    # --- Start / finish checks ------------------------------------------------
     def _get_maximum_quantity(self):
-        max_qty = 0.0
-        for workorder in self:
-            max_qty = workorder.qty_output_prev_wo
-            if workorder.milestone:
-                prev_workorders_closed = workorder.production_id.workorder_ids.filtered(lambda x: (x.sequence < workorder.sequence and x.state == 'done'))
-                if prev_workorders_closed:
-                    max_qty = min(prev_workorders_closed.mapped('qty_output_wo'))
-                else:
-                    max_qty = workorder.qty_production
-            if workorder.production_id.product_id.tracking == 'serial':
-                max_qty = min(workorder.qty_output_prev_wo, 1)
+        self.ensure_one()
+        max_qty = self.qty_output_prev_wo
+        if self.milestone:
+            closed = self.production_id.workorder_ids.filtered(
+                lambda w: w.sfc_sequence < self.sfc_sequence and w.state == 'done')
+            max_qty = min(closed.mapped('qty_output_wo')) if closed else self.qty_production
+        if self.production_id.product_id.tracking == 'serial':
+            max_qty = min(self.qty_output_prev_wo, 1)
         return max_qty
 
     def workorder_start_checks(self):
         for workorder in self:
             if not workorder.date_planned_start_wo:
-                raise UserError(_('Manufacturing Order not scheduled yet'))
-            if workorder.qty_output_wo > workorder.qty_production:
-                raise UserError( _('It is not possible to produce more than production order quantity'))
+                raise UserError(_('This work order has not been scheduled yet.'))
+            if float_compare(workorder.qty_output_wo, workorder.qty_production,
+                             precision_rounding=workorder.production_id.product_uom_id.rounding) > 0:
+                raise UserError(_('It is not possible to produce more than the production order quantity.'))
 
     def workorder_finish_checks(self):
         for workorder in self:
-            max_qty_output_wo = workorder._get_maximum_quantity()
-            if workorder.qty_output_wo > max_qty_output_wo:
-                raise UserError(_('It is not possible to produce more than %s') % max_qty_output_wo)
+            max_qty = workorder._get_maximum_quantity()
+            if float_compare(workorder.qty_output_wo, max_qty,
+                             precision_rounding=workorder.production_id.product_uom_id.rounding) > 0:
+                raise UserError(_('It is not possible to produce more than %s.', max_qty))
 
-    @api.depends('time_ids','state')
-    def _compute_dates_actual(self):
-        date_start = False
-        date_end = False
+    def button_start(self, raise_on_invalid_state=False):
         for workorder in self:
-            if workorder.state == 'done' and workorder.time_ids:
-                date_start =  workorder.time_ids.sorted('date_start')[0].date_start
-                date_end = workorder.time_ids.sorted('date_end')[-1].date_end
-            workorder.date_actual_start_wo = date_start
-            workorder.date_actual_finished_wo = date_end
+            if not workorder.qty_output_wo:
+                workorder.qty_output_wo = (
+                    workorder.qty_output_prev_wo if workorder.prev_work_order_id
+                    else workorder.qty_production)
+            missing = any(
+                (float_compare(move.product_qty, move.forecast_availability,
+                               precision_rounding=move.product_id.uom_id.rounding) > 0
+                 or move.forecast_expected_date)
+                for move in workorder.production_id.move_raw_ids.filtered(
+                    lambda m: m.state not in ('done', 'cancel')))
+            if missing and not workorder.workcenter_id.start_without_stock:
+                raise UserError(_('It is not possible to start a work order without component availability.'))
+            workorder.workorder_start_checks()
+        return super().button_start(raise_on_invalid_state=raise_on_invalid_state)
 
-    ## close workload
     def button_finish(self):
-        super().button_finish()
+        res = super().button_finish()
         for workorder in self:
             workorder.workorder_finish_checks()
-            workorders = workorder.production_id.workorder_ids
-            prev_workorders = [x for x in workorders if x.sequence < workorder.sequence]
+            prev = workorder.production_id.workorder_ids.filtered(
+                lambda w: w.sfc_sequence < workorder.sfc_sequence)
             if workorder.milestone:
-                if any(prev_workorder.state == 'progress' for prev_workorder in prev_workorders):
-                    raise UserError(_('previous workorder in progress'))
-                for prev_workorder in prev_workorders:
-                    if prev_workorder.state in ('ready','pending','waiting'):
-                        prev_workorder.state = 'cancel'
-                    wo_capacity_ids = self.env['mrp.workcenter.capacity'].search([('workorder_id', '=', prev_workorder.id)])
-                    if wo_capacity_ids:
-                        wo_capacity_ids.unlink()
-            else:
-                if any(prev_workorder.state not in ('done', 'cancel') for prev_workorder in prev_workorders):
-                    raise UserError(_('previous workorders not yet closed or cancelled'))
+                if any(w.state == 'progress' for w in prev):
+                    raise UserError(_('A preceding work order is still in progress.'))
+                to_cancel = prev.filtered(lambda w: w.state in ('ready', 'pending', 'waiting'))
+                to_cancel.write({'state': 'cancel'})
+                self.env['mrp.workcenter.load'].search(
+                    [('workorder_id', 'in', prev.ids)]).unlink()
+            elif any(w.state not in ('done', 'cancel') for w in prev):
+                raise UserError(_('Preceding work orders are not yet closed or cancelled.'))
             workorder.qty_producing = workorder.qty_output_wo
-            wo_capacity_ids = self.env['mrp.workcenter.capacity'].search([('workorder_id', '=', workorder.id)])
-            wo_capacity_ids.unlink()
+            self.env['mrp.workcenter.load'].search(
+                [('workorder_id', '=', workorder.id)]).unlink()
+        return res
 
-    def _get_capacity_load(self, start_date, end_date):
-        sdate =  start_date.date()
-        edate = end_date.date()
-        delta = edate - sdate
-        list_days = []
-        nro_hours = 0.0
-        list_days.append(start_date)
-        for i in range(delta.days):
-            day = sdate + timedelta(days=i+1)
-            day = datetime.combine(day, datetime.min.time())
-            list_days.append(day)
-        list_days.append(end_date)
-        for i in range(len(list_days) - 1):
-            for workorder in self:
-                nro_hours = workorder.workcenter_id.resource_calendar_id.get_work_duration_data(list_days[i], list_days[i+1])['hours']
-                if  nro_hours > 0:
-                    id_created= self.env['mrp.workcenter.capacity'].create({
+    # --- Capacity load --------------------------------------------------------
+    def _rebuild_capacity_load(self):
+        """Recreate the daily capacity-load rows for the work order's SFC
+        scheduling window."""
+        Load = self.env['mrp.workcenter.load']
+        for workorder in self:
+            Load.search([('workorder_id', '=', workorder.id)]).unlink()
+            start = workorder.date_planned_start_wo
+            end = workorder.date_planned_finished_wo
+            if not start or not end or not workorder.workcenter_id:
+                continue
+            calendar = workorder.workcenter_id.resource_calendar_id
+            if not calendar:
+                continue
+            days = [start]
+            cursor = start.date()
+            for _i in range(max((end.date() - start.date()).days, 0)):
+                cursor = cursor + timedelta(days=1)
+                days.append(datetime.combine(cursor, datetime.min.time()))
+            days.append(end)
+            vals = []
+            for i in range(len(days) - 1):
+                hours = calendar.get_work_hours_count(days[i], days[i + 1])
+                if hours > 0:
+                    vals.append({
                         'workcenter_id': workorder.workcenter_id.id,
                         'workorder_id': workorder.id,
                         'product_id': workorder.production_id.product_id.id,
                         'product_qty': workorder.production_id.product_qty,
                         'product_uom_id': workorder.production_id.product_uom_id.id,
-                        'date_planned': list_days[i],
-                        'wo_capacity_requirements': nro_hours * workorder.workcenter_id.capacity,
+                        'date_planned': days[i],
+                        'wo_capacity_requirements': hours * workorder.workcenter_id._sfc_capacity(workorder.production_id.product_id),
                     })
+            if vals:
+                Load.create(vals)
 
-    ## create/change workload
-    @api.constrains('date_planned_start_wo', 'date_planned_finished_wo')
-    def _change_scheduled_dates(self):
+    # --- Scheduling helpers ---------------------------------------------------
+    def forwards_scheduling(self):
         for workorder in self:
-            date_planned_start = workorder.date_planned_start_wo
-            date_planned_finish = workorder.date_planned_finished_wo
-            if date_planned_start and date_planned_finish:
-                wo_capacity_ids = self.env['mrp.workcenter.capacity'].search([('workorder_id', '=', workorder.id)])
-                wo_capacity_ids.unlink()
-                workorder._get_capacity_load(date_planned_start, date_planned_finish)
-                if date_planned_finish and date_planned_start and date_planned_finish > date_planned_start:
-                    if date_planned_start and workorder.date_planned_finished and date_planned_start > workorder.date_planned_finished:
-                        workorder.date_planned_finished = date_planned_finish
-                        workorder.date_planned_start = date_planned_start
-                    else:
-                        workorder.date_planned_start = date_planned_start
-                        workorder.date_planned_finished = date_planned_finish
+            calendar = workorder.workcenter_id.resource_calendar_id
+            if calendar:
+                workorder.date_planned_finished_wo = calendar.plan_hours(
+                    workorder.duration_expected / 60.0, workorder.date_planned_start_wo, compute_leaves=True)
+            else:
+                workorder.date_planned_finished_wo = (
+                    workorder.date_planned_start_wo + timedelta(minutes=workorder.duration_expected))
 
     def backwards_scheduling(self):
         for workorder in self:
-            time_delta = workorder.duration_expected
-            workorder.date_planned_start_wo = workorder.date_planned_finished_wo - timedelta(minutes=time_delta)
-            if workorder.workcenter_id.resource_calendar_id:
-                calendar = workorder.workcenter_id.resource_calendar_id
-                duration_expected = - workorder.duration_expected / 60
-                workorder.date_planned_start_wo = calendar.plan_hours(duration_expected, workorder.date_planned_finished_wo, True)
+            calendar = workorder.workcenter_id.resource_calendar_id
+            if calendar:
+                workorder.date_planned_start_wo = calendar.plan_hours(
+                    -workorder.duration_expected / 60.0, workorder.date_planned_finished_wo, compute_leaves=True)
+            else:
+                workorder.date_planned_start_wo = (
+                    workorder.date_planned_finished_wo - timedelta(minutes=workorder.duration_expected))
 
-    def forwards_scheduling(self):
-        for workorder in self:
-            time_delta = workorder.duration_expected
-            workorder.date_planned_finished_wo = workorder.date_planned_start_wo + timedelta(minutes=time_delta)
-            if workorder.workcenter_id.resource_calendar_id:
-                calendar = workorder.workcenter_id.resource_calendar_id
-                duration_expected = workorder.duration_expected / 60
-                workorder.date_planned_finished_wo = calendar.plan_hours(duration_expected, workorder.date_planned_start_wo, True)
+    def mid_point_scheduling_engine(self):
+        """Re-plan the whole MO around this work order's start date, keeping
+        parallel (same SFC sequence) and sequential operations consistent."""
+        self.ensure_one()
+        Workorder = self.env['mrp.workorder']
+        workorder = self
+        seq = workorder.sfc_sequence
+        workorder.forwards_scheduling()
+        min_date_start = workorder.date_planned_start_wo
+        max_date_finished = workorder.date_planned_finished_wo
+
+        # Parallel operations not yet started.
+        for parallel in Workorder.search([
+                ('production_id', '=', workorder.production_id.id),
+                ('state', 'in', ('ready', 'pending', 'waiting')),
+                ('sfc_sequence', '=', seq), ('id', '!=', workorder.id)]):
+            parallel.date_planned_start_wo = workorder.date_planned_start_wo
+            parallel.forwards_scheduling()
+            max_date_finished = max(parallel.date_planned_finished_wo, max_date_finished)
+
+        # Parallel operations already in progress.
+        for progress in Workorder.search([
+                ('production_id', '=', workorder.production_id.id),
+                ('state', '=', 'progress'),
+                ('sfc_sequence', '=', seq), ('id', '!=', workorder.id)]):
+            if progress.date_planned_finished_wo:
+                max_date_finished = max(progress.date_planned_finished_wo, max_date_finished)
+
+        # Preceding operations, scheduled backwards.
+        prev_workorders = Workorder.search([
+            ('production_id', '=', workorder.production_id.id),
+            ('state', 'in', ('ready', 'pending', 'progress', 'waiting')),
+            ('sfc_sequence', '<', seq),
+        ]).sorted(key=lambda w: (w.sfc_sequence, w.duration_expected), reverse=True)
+        current = workorder
+        for prev in prev_workorders:
+            if prev.state == 'progress':
+                if prev.date_planned_finished_wo and prev.date_planned_finished_wo > current.date_planned_start_wo:
+                    raise UserError(_(
+                        'Backward scheduling is not possible for the manufacturing order %s.',
+                        workorder.production_id.name))
+            elif current.sfc_sequence == prev.sfc_sequence:
+                prev.date_planned_start_wo = current.date_planned_start_wo
+                prev.forwards_scheduling()
+            else:
+                prev.date_planned_finished_wo = min_date_start
+                prev.backwards_scheduling()
+            min_date_start = min(prev.date_planned_start_wo or min_date_start, current.date_planned_start_wo)
+            current = prev
+
+        # Following operations, scheduled forwards.
+        succ_workorders = Workorder.search([
+            ('production_id', '=', workorder.production_id.id),
+            ('state', 'in', ('ready', 'pending', 'waiting')),
+            ('sfc_sequence', '>', seq),
+        ]).sorted(key=lambda w: w.sfc_sequence)
+        current = workorder
+        for succ in succ_workorders:
+            if current.sfc_sequence == succ.sfc_sequence:
+                succ.date_planned_start_wo = current.date_planned_start_wo
+            else:
+                succ.date_planned_start_wo = max_date_finished
+            succ.forwards_scheduling()
+            max_date_finished = max(succ.date_planned_finished_wo, current.date_planned_finished_wo)
+            current = succ
+
+        (workorder | prev_workorders | succ_workorders)._rebuild_capacity_load()
+        workorder.production_id.date_planned_start_wo = min_date_start
+        workorder.production_id.date_planned_finished_wo = max_date_finished

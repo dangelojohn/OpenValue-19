@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from datetime import datetime
 from datetime import date
 
@@ -16,22 +17,33 @@ class MrpProduction(models.Model):
     ovh_product_cost = fields.Float('OVH Finished Product Cost', digits='Product Price', readonly=True, copy=False)
     ovh_components_cost = fields.Float('OVH Components Cost', digits='Product Price', readonly=True, copy=False)
     industrial_cost = fields.Float('Actual Full Industrial Cost', digits='Product Price', readonly=True, copy=False)
-    industrial_cost_unit = fields.Float(' Actual Full Industrial Unit Cost', digits='Product Price', group_operator="avg", readonly=True, copy=False)
+    industrial_cost_unit = fields.Float(' Actual Full Industrial Unit Cost', digits='Product Price', aggregator="avg", readonly=True, copy=False)
 
     def button_mark_done(self):
         action = super().button_mark_done()
-        for move in self.move_raw_ids:
-            if move.analytic_account_line_id:
-                analytic_line = self.env['account.analytic.line'].browse(move.analytic_account_line_id.id)
-                analytic_line.sudo().unlink()
-        for workorder in self.workorder_ids:
-            if workorder.mo_analytic_account_line_id:
-                analytic_line = self.env['account.analytic.line'].browse(workorder.mo_analytic_account_line_id.id)
-                analytic_line.sudo().unlink()
+        for production in self:
+            # super() may return a wizard (backorder / immediate production) and
+            # leave the MO not actually done; only purge analytic lines once done.
+            if production.state != 'done':
+                continue
+            # v19: the analytic-line links are plural recordsets
+            # (stock.move.analytic_account_line_ids, workorder.mo_analytic_account_line_ids);
+            # operate on them directly rather than re-browsing a single id.
+            production.move_raw_ids.analytic_account_line_ids.sudo().unlink()
+            production.workorder_ids.mo_analytic_account_line_ids.sudo().unlink()
         return action
 
     def button_closure(self):
         for record in self:
+            # Idempotency guard: re-running would post a second full set of variance
+            # + overhead entries. Stop before posting anything.
+            if record.closure_state:
+                raise UserError(_(
+                    "Manufacturing Order %s is already financially closed.",
+                    record.display_name))
+            # Fail fast on incomplete accounting configuration rather than leaving a
+            # half-posted batch behind.
+            record._check_closure_configuration()
             qty_produced = record._get_qty_produced()
             # variances
             record._planned_variance_postings(qty_produced)
@@ -42,8 +54,29 @@ class MrpProduction(models.Model):
             record._bom_ovh_analytic_postings()
             record.industrial_cost = record.direct_cost + record.ovh_var_direct_cost + record.ovh_fixed_direct_cost + record.ovh_product_cost + record.ovh_components_cost
             record.industrial_cost_unit = record.industrial_cost / qty_produced
-            record.closure_state = 'True'
+            record.closure_state = True
         return True
+
+    def _check_closure_configuration(self):
+        self.ensure_one()
+        company = self.company_id
+        missing = []
+        if not company.manufacturing_journal_id:
+            missing.append(_("Manufacturing Journal"))
+        if not company.planned_variances_account_id:
+            missing.append(_("Planned Variance Cost Account"))
+        if not company.material_variances_account_id:
+            missing.append(_("Components Variance Cost Account"))
+        if not company.other_variances_account_id:
+            missing.append(_("Direct Variance Cost Account"))
+        if missing:
+            raise UserError(_(
+                "Cannot close Manufacturing Order %(mo)s: the following accounting "
+                "settings are not configured on company %(company)s:\n- %(items)s",
+                mo=self.display_name,
+                company=company.display_name,
+                items="\n- ".join(missing),
+            ))
 
     def _get_final_date(self):
         final_date = False
@@ -84,7 +117,7 @@ class MrpProduction(models.Model):
                 })
                 id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_planned_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -105,7 +138,7 @@ class MrpProduction(models.Model):
                 })
                 id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_planned_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -131,13 +164,17 @@ class MrpProduction(models.Model):
 
     # production material and by product variance costs posting
     def _material_costs_variance_postings(self, quantity):
-        mat_actual_amount = mat_planned_amount = matamount = receiptamount = by_product_amount  = 0.0
         for record in self:
+            # accumulators reset per record (were initialised once before the loop,
+            # leaking running totals across a multi-MO recordset).
+            mat_actual_amount = mat_planned_amount = matamount = receiptamount = by_product_amount = 0.0
             final_date = record._get_final_date()
-            raw_moves = record.move_raw_ids.filtered(lambda r: (r.state == 'done' and r.product_id.type == 'product'))
+            # v19: product.type no longer has 'product'; storable goods are flagged
+            # by is_storable.
+            raw_moves = record.move_raw_ids.filtered(lambda r: (r.state == 'done' and r.product_id.is_storable))
             for move in raw_moves:
                 matamount += move.product_id.standard_price * move.product_qty
-            finished_moves = record.move_finished_ids.filtered(lambda r: (r.state == 'done' and r.product_id.type == 'product'))
+            finished_moves = record.move_finished_ids.filtered(lambda r: (r.state == 'done' and r.product_id.is_storable))
             for move in finished_moves:
                 receiptamount += move.product_id.standard_price * move.product_qty
             if receiptamount > 0.0:
@@ -167,7 +204,7 @@ class MrpProduction(models.Model):
                 })
                 id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_material_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -188,7 +225,7 @@ class MrpProduction(models.Model):
                 })
                 id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_material_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -214,8 +251,9 @@ class MrpProduction(models.Model):
 
     # production direct variance costs posting
     def _direct_costs_variance_postings(self, quantity):
-        direct_actual_amount = direct_planned_amount = 0.0
         for record in self:
+            # accumulators reset per record (see _material_costs_variance_postings).
+            direct_actual_amount = direct_planned_amount = 0.0
             final_date = record._get_final_date()
             direct_actual_amount = (record.var_cost_unit + record.fixed_cost_unit) * quantity
             direct_planned_amount =  (record.planned_var_cost_unit + record.planned_fixed_cost_unit) * quantity
@@ -242,7 +280,7 @@ class MrpProduction(models.Model):
                 })
                 id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_direct_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -259,10 +297,11 @@ class MrpProduction(models.Model):
                     'date': final_date,
                     'ref' : "Direct Costs Variance",
                     'company_id': record.company_id.id,
+                    'manufacture_order_id': record.id,
                 })
                 id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
                     'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_out_account_id.id,
+                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
                     'analytic_distribution': {record.bom_id.costs_direct_variances_analytic_account_id.id: 100},
                     'product_id': record.product_id.id,
                     'name' : desc_bom,
@@ -287,10 +326,18 @@ class MrpProduction(models.Model):
         return True
 
     def _wc_ovh_analytic_postings(self):
-        fixedamount = varamount = 0.0
         for record in self:
             final_date = record._get_final_date()
+            # per-record running totals for the stored fields
+            total_varamount = 0.0
+            total_fixedamount = 0.0
             for workorder in record.workorder_ids:
+                # per-workorder amounts: reset each iteration so the analytic line
+                # posted for a workorder reflects ONLY that workorder. (Previously
+                # these accumulated across workorders but were posted inside the
+                # loop, so WO2 posted WO1+WO2, WO3 posted WO1+WO2+WO3, etc.)
+                varamount = 0.0
+                fixedamount = 0.0
                 desc_wo = str(record.name) + '-' + str(workorder.workcenter_id.name) + '-' + str(workorder.name)
                 for time in workorder.time_ids:
                     if time.overall_duration:
@@ -326,8 +373,10 @@ class MrpProduction(models.Model):
                         'company_id': workorder.workcenter_id.company_id.id,
                         'manufacture_order_id': record.id,
                     })
-            record.ovh_var_direct_cost = varamount
-            record.ovh_fixed_direct_cost = fixedamount
+                total_varamount += varamount
+                total_fixedamount += fixedamount
+            record.ovh_var_direct_cost = total_varamount
+            record.ovh_fixed_direct_cost = total_fixedamount
         return True
 
     def _bom_ovh_analytic_postings(self):

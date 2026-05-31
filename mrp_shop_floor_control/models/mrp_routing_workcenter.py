@@ -1,26 +1,32 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, models, fields, _
-from odoo.exceptions import UserError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class MrpRoutingWorkcenter(models.Model):
     _inherit = 'mrp.routing.workcenter'
 
-    milestone = fields.Boolean(_('Milestone'), default=False)
-    sequence = fields.Integer(
-        'Sequence', default=100,
-        help="Gives the sequence order when displaying a list of routing Work Centers.")
+    milestone = fields.Boolean(
+        'Milestone', default=False,
+        help="A milestone operation closes all preceding operations of the "
+             "manufacturing order when it is finished. No parallel operation "
+             "(same sequence) is allowed on a milestone.")
 
-    @api.constrains('milestone','sequence')
-    def ckeck_milestone(self):
+    @api.constrains('milestone', 'sequence')
+    def _check_milestone(self):
         for operation in self:
-            other_operations = self.env['mrp.routing.workcenter'].search([('bom_id', '=', operation.bom_id.id),('id', '!=', operation.id)])
-            if operation.milestone:
-                milestone_sequence = operation.sequence
-                if any(other_operation.sequence == milestone_sequence for other_operation in other_operations):
-                    raise UserError(_('no parallel operation is allowed for milestone'))
-            else:
-                operation_sequence = operation.sequence
-                if any(other_operation.sequence == operation_sequence and other_operation.milestone for other_operation in other_operations):
-                    raise UserError(_('no parallel operation is allowed for milestone'))
+            siblings = self.search([
+                ('bom_id', '=', operation.bom_id.id),
+                ('id', '!=', operation.id),
+                ('sequence', '=', operation.sequence),
+            ])
+            if operation.milestone and siblings:
+                raise ValidationError(_(
+                    "No parallel operation is allowed for a milestone "
+                    "(operation '%s').", operation.display_name))
+            if siblings.filtered('milestone'):
+                raise ValidationError(_(
+                    "No parallel operation is allowed for a milestone "
+                    "(operation '%s' shares its sequence with a milestone).",
+                    operation.display_name))

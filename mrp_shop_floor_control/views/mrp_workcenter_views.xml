@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
-    <record id="mrp_workcenter_view_msfc" model="ir.ui.view">
-        <field name="name">mrp.workcenter.form</field>
+    <record id="mrp_workcenter_view_sfc" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form.sfc</field>
         <field name="model">mrp.workcenter</field>
         <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[@name='general_info']/group" position="inside">
-                    <group string="Shop Floor Control">
-                        <field name="start_without_stock"/>
-                    </group>
-                </xpath>
-                <xpath expr="//notebook" position="inside">
-                    <page string="Capacity Load" name="capacity_load">
-                        <group>
-                            <div>
-                                <field name="capacity_chart" widget="plotly_chart" nolabel="1"/>
-                            </div>
-                        </group>
-                    </page>
-                </xpath>
-            </field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_info']/group" position="inside">
+                <group string="Shop Floor Control" name="sfc">
+                    <field name="start_without_stock"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Capacity Load" name="capacity_load">
+                    <field name="capacity_chart" widget="plotly_chart" nolabel="1"/>
+                </page>
+            </xpath>
+        </field>
     </record>
 </odoo>

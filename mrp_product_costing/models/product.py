@@ -15,6 +15,9 @@ class ProductProduct(models.Model):
         # esclusione delle by-product boms
         if byproduct_bom:
             return 0
+        # guard the final per-unit division (total / bom.product_qty).
+        if not bom.product_qty:
+            return 0
         if not boms_to_recompute:
             boms_to_recompute = []
         #total = 0
@@ -25,7 +28,14 @@ class ProductProduct(models.Model):
                 continue
             #costvar += (operation.time_cycle/60) * operation.workcenter_id.costs_hour
             #costfixed += (operation.workcenter_id.time_stop + operation.workcenter_id.time_start) * operation.workcenter_id.costs_hour_fixed/60
+            # skip operations whose workcenter would divide by zero.
+            if not operation.workcenter_id.time_efficiency:
+                continue
             costvar += (operation.time_cycle * 100.0 / operation.workcenter_id.time_efficiency) * operation.workcenter_id.costs_hour / 60
+            # NOTE [design decision - confirm intent]: costfixed is multiplied by
+            # bom.product_qty here, then the grand total is divided by bom.product_qty
+            # at the return, so setup/teardown (fixed) cost is charged in FULL per
+            # unit rather than amortised across the batch. Preserved as-is from v16.
             costfixed += ((operation.workcenter_id.time_stop + operation.workcenter_id.time_start) * operation.workcenter_id.costs_hour_fixed / 60) * bom.product_qty
         total += costvar + costfixed
         # components
