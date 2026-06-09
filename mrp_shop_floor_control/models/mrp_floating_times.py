@@ -19,10 +19,10 @@ class MrpFloatingTimes(models.Model):
     mrp_ftbp_time = fields.Float("Floating Time Before Production (Hours)", default=1.0)
     mrp_ftap_time = fields.Float("Floating Time After Production (Hours)", default=1.0)
 
-    _sql_constraints = [
-        ('warehouse_uniq', 'unique(warehouse_id)',
-         'A Floating Times record already exists for this warehouse.'),
-    ]
+    _warehouse_uniq = models.Constraint(
+        'unique(warehouse_id)',
+        'A Floating Times record already exists for this warehouse.',
+    )
 
     @api.model
     def create_floating_times(self):
