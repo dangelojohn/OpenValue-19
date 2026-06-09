@@ -59,7 +59,7 @@
         <field name="arch" type="xml">
             <search position="inside">
                 <filter string="SFC Late" name="sfc_late"
-                        domain="[('date_planned_start_wo', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'in', ('ready', 'pending', 'waiting'))]"/>
+                        domain="[('date_planned_start_wo', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'in', ('blocked', 'ready'))]"/>
             </search>
         </field>
     </record>
@@ -119,7 +119,7 @@
     <record id="mrp_workorder_capacity_leveling_action" model="ir.actions.act_window">
         <field name="name">Work Order Capacity Leveling</field>
         <field name="res_model">mrp.workorder</field>
-        <field name="domain">[('state', 'in', ('ready', 'pending', 'waiting'))]</field>
+        <field name="domain">[('state', 'in', ('blocked', 'ready'))]</field>
         <field name="view_mode">list</field>
         <field name="view_id" ref="mrp_workorder_capacity_leveling_list"/>
         <field name="search_view_id" ref="mrp.view_mrp_production_workorder_form_view_filter"/>

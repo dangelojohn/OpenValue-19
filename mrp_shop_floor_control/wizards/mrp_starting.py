@@ -44,7 +44,7 @@ class MrpStarting(models.TransientModel):
             if any(w.state == 'progress' for w in prev):
                 raise UserError(_('A preceding work order is in progress.'))
             for prev_wo in prev:
-                if prev_wo.state in ('ready', 'pending', 'waiting'):
+                if prev_wo.state in ('blocked', 'ready'):
                     prev_wo.state = 'cancel'
                 self.env['mrp.workcenter.load'].search(
                     [('workorder_id', '=', prev_wo.id)]).unlink()

@@ -139,7 +139,7 @@ class MrpConfirmation(models.TransientModel):
         workorder = self.workorder_id
         if not workorder:
             raise UserError(_('Please select a work order.'))
-        if workorder.state in ('ready', 'waiting', 'pending'):
+        if workorder.state in ('blocked', 'ready'):
             workorder.button_start()
         time_record = self.env['mrp.workcenter.productivity'].search(
             [('workorder_id', '=', workorder.id), ('date_end', '=', False)], limit=1)

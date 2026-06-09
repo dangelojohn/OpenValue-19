@@ -177,7 +177,7 @@ class MrpWorkorder(models.Model):
             if workorder.milestone:
                 if any(w.state == 'progress' for w in prev):
                     raise UserError(_('A preceding work order is still in progress.'))
-                to_cancel = prev.filtered(lambda w: w.state in ('ready', 'pending', 'waiting'))
+                to_cancel = prev.filtered(lambda w: w.state in ('blocked', 'ready'))
                 to_cancel.write({'state': 'cancel'})
                 self.env['mrp.workcenter.load'].search(
                     [('workorder_id', 'in', prev.ids)]).unlink()
@@ -259,7 +259,7 @@ class MrpWorkorder(models.Model):
         # Parallel operations not yet started.
         for parallel in Workorder.search([
                 ('production_id', '=', workorder.production_id.id),
-                ('state', 'in', ('ready', 'pending', 'waiting')),
+                ('state', 'in', ('blocked', 'ready')),
                 ('sfc_sequence', '=', seq), ('id', '!=', workorder.id)]):
             parallel.date_planned_start_wo = workorder.date_planned_start_wo
             parallel.forwards_scheduling()
@@ -276,7 +276,7 @@ class MrpWorkorder(models.Model):
         # Preceding operations, scheduled backwards.
         prev_workorders = Workorder.search([
             ('production_id', '=', workorder.production_id.id),
-            ('state', 'in', ('ready', 'pending', 'progress', 'waiting')),
+            ('state', 'in', ('blocked', 'ready', 'progress')),
             ('sfc_sequence', '<', seq),
         ]).sorted(key=lambda w: (w.sfc_sequence, w.duration_expected), reverse=True)
         current = workorder
@@ -298,7 +298,7 @@ class MrpWorkorder(models.Model):
         # Following operations, scheduled forwards.
         succ_workorders = Workorder.search([
             ('production_id', '=', workorder.production_id.id),
-            ('state', 'in', ('ready', 'pending', 'waiting')),
+            ('state', 'in', ('blocked', 'ready')),
             ('sfc_sequence', '>', seq),
         ]).sorted(key=lambda w: w.sfc_sequence)
         current = workorder
