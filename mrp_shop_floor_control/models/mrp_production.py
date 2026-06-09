@@ -147,9 +147,15 @@ class MrpProduction(models.Model):
     @api.depends('workorder_ids.date_planned_start_wo', 'workorder_ids.state')
     def _compute_is_scheduled(self):
         for production in self:
-            production.is_scheduled = any(
-                wo.date_planned_start_wo for wo in production.workorder_ids
-                if wo.state not in ('done', 'cancel'))
+            wos = production.workorder_ids
+            # An MO is "scheduled" when every work order is either planned or
+            # already done/cancelled. Using all() (not any() over only the
+            # not-done WOs) keeps is_scheduled True once production completes —
+            # otherwise button_mark_done's guard becomes unreachable for any MO
+            # with work orders (all-done -> empty generator -> any() == False).
+            production.is_scheduled = bool(wos) and all(
+                wo.date_planned_start_wo or wo.state in ('done', 'cancel')
+                for wo in wos)
 
     def _compute_hours_uom(self):
         uom = self.env.ref('uom.product_uom_hour', raise_if_not_found=False)
