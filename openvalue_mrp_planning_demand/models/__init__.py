@@ -1,4 +1,3 @@
 # -*- coding: utf-8 -*-
 
 from . import mrp_planning_run
-from . import mrp_planning_line

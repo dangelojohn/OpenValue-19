@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_planning_run_form_demand" model="ir.ui.view">
+        <field name="name">mrp.planning.run.form.demand</field>
+        <field name="model">mrp.planning.run</field>
+        <field name="inherit_id" ref="openvalue_mrp_planning_engine.view_mrp_planning_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_id']" position="after">
+                <field name="include_sales_demand" readonly="state == 'done'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

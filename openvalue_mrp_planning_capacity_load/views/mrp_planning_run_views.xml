@@ -6,8 +6,18 @@
         <field name="model">mrp.planning.run</field>
         <field name="inherit_id" ref="openvalue_mrp_planning_engine.view_mrp_planning_run_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_count']" position="after">
+                <field name="capacity_horizon_days" readonly="state == 'done'"/>
+                <field name="overloaded_workcenter_count"/>
+            </xpath>
             <xpath expr="//field[@name='line_ids']/list/field[@name='suggested_qty']" position="after">
+                <field name="main_workcenter_id" optional="show"/>
                 <field name="required_hours" sum="Total Hours"/>
+                <field name="available_hours" optional="hide"/>
+                <field name="capacity_overloaded"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/list" position="attributes">
+                <attribute name="decoration-danger">capacity_overloaded == True</attribute>
             </xpath>
         </field>
     </record>
