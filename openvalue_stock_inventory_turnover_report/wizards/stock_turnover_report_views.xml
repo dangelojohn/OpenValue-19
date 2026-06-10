@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_turnover_report_form" model="ir.ui.view">
+        <field name="name">stock.turnover.report.form</field>
+        <field name="model">stock.turnover.report</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Turnover">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="categ_id" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <button name="action_compute" type="object" string="Compute"
+                        class="oe_highlight"/>
+                <field name="line_ids" readonly="1" nolabel="1" colspan="2">
+                    <list string="Turnover">
+                        <field name="product_id"/>
+                        <field name="out_qty"/>
+                        <field name="avg_inventory"/>
+                        <field name="turnover"/>
+                    </list>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_turnover_report" model="ir.actions.act_window">
+        <field name="name">Inventory Turnover</field>
+        <field name="res_model">stock.turnover.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_stock_turnover_report"
+              name="Inventory Turnover"
+              parent="stock.menu_warehouse_report"
+              action="action_stock_turnover_report"
+              sequence="60"
+              groups="stock.group_stock_manager"/>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_kpi_form" model="ir.ui.view">
+        <field name="name">stock.kpi.form</field>
+        <field name="model">stock.kpi</field>
+        <field name="arch" type="xml">
+            <form string="Stock KPI" create="false">
+                <sheet>
+                    <div class="o_form_statusbar"/>
+                    <group col="3">
+                        <group string="On-hand Value">
+                            <field name="total_onhand_value" nolabel="1"/>
+                        </group>
+                        <group string="Products in Stock">
+                            <field name="product_in_stock" nolabel="1"/>
+                        </group>
+                        <group string="Negative Forecast">
+                            <field name="product_negative_forecast" nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_kpi" model="ir.actions.act_window">
+        <field name="name">Stock KPI</field>
+        <field name="res_model">stock.kpi</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_stock_kpi"
+              name="Stock KPI"
+              parent="stock.menu_warehouse_report"
+              action="action_stock_kpi"
+              sequence="55"
+              groups="stock.group_stock_user"/>
+
+</odoo>
