@@ -39,7 +39,15 @@ class StockTurnoverReport(models.TransientModel):
                 m.product_qty for m in moves
                 if m.location_id.usage == 'internal'
                 and m.location_dest_id.usage != 'internal')
-            avg_inventory = product.qty_available or 0.0
+            in_qty = sum(
+                m.product_qty for m in moves
+                if m.location_dest_id.usage == 'internal'
+                and m.location_id.usage != 'internal')
+            # True period average: begin = end - net change over the period,
+            # then average the opening and closing on-hand quantities.
+            end_qty = product.qty_available or 0.0
+            begin_qty = end_qty - (in_qty - out_qty)
+            avg_inventory = (begin_qty + end_qty) / 2.0
             turnover = (out_qty / avg_inventory) if avg_inventory else 0.0
             if out_qty or avg_inventory:
                 vals.append({

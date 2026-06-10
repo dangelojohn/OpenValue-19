@@ -27,6 +27,7 @@
                 <field name="planned_date"/>
                 <field name="scheduled_date"/>
                 <field name="is_delayed"/>
+                <field name="delay_days"/>
                 <field name="generated_ref"/>
             </list>
         </field>
