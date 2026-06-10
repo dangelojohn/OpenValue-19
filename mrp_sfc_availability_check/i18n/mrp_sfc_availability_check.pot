@@ -1,0 +1,256 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_sfc_availability_check
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:32+0000\n"
+"PO-Revision-Date: 2026-06-10 23:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_sfc_availability_check
+#. odoo-python
+#: code:addons/mrp_sfc_availability_check/models/mrp_production.py:0
+msgid "%s has no Bill of Materials to check."
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "<strong>Manufacturing Order:</strong>"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "<strong>Status:</strong>"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__availability_state
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mrp_production_form_availability
+msgid "Availability"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.actions.report,name:mrp_sfc_availability_check.action_report_mo_availability
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Availability Check"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__availability_line_ids
+msgid "Availability Lines"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__available_qty
+#: model:ir.model.fields.selection,name:mrp_sfc_availability_check.selection__mrp_production__availability_state__available
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Available"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__available_hours
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Available (h)"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mrp_mps_report_form
+msgid "Cancel"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields.selection,name:mrp_sfc_availability_check.selection__mrp_availability_line__check_type__capacity
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Capacity"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__capacity_available
+msgid "Capacity Available"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mrp_production_form_availability
+msgid "Check Availability"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mrp_mps_report_form
+msgid "Check Feasibility"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__product_id
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Component"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__create_uid
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__create_date
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__only_draft
+msgid "Draft Orders Only"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__date_from
+msgid "From"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__id
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__id
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__is_shortage
+msgid "Is Shortage"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__availability_check_date
+msgid "Last Availability Check"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__write_uid
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__write_date
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model,name:mrp_sfc_availability_check.model_mrp_availability_line
+msgid "MRP Availability Check Line"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model,name:mrp_sfc_availability_check.model_mrp_production
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__production_id
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#. odoo-python
+#: code:addons/mrp_sfc_availability_check/wizards/mrp_mps_report.py:0
+#: model:ir.actions.act_window,name:mrp_sfc_availability_check.action_mrp_mps_report
+#: model:ir.ui.menu,name:mrp_sfc_availability_check.menu_mrp_mps_report
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mps_production_list
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.view_mrp_mps_report_form
+msgid "Master Production Plan"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model,name:mrp_sfc_availability_check.model_mrp_mps_report
+msgid "Master Production Plan Feasibility"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields.selection,name:mrp_sfc_availability_check.selection__mrp_availability_line__check_type__material
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Material"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_production__material_available
+msgid "Material Available"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields.selection,name:mrp_sfc_availability_check.selection__mrp_production__availability_state__unknown
+msgid "Not Checked"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__required_qty
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Required"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__required_hours
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Required (h)"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,help:mrp_sfc_availability_check.field_mrp_mps_report__only_draft
+msgid "Restrict to draft orders (not yet confirmed)."
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,help:mrp_sfc_availability_check.field_mrp_production__availability_state
+msgid "Result of the last material + capacity availability check."
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__shortage_qty
+#: model:ir.model.fields.selection,name:mrp_sfc_availability_check.selection__mrp_production__availability_state__shortage
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Shortage"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__shortage_hours
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Shortage (h)"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_mps_report__date_to
+msgid "To"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__check_type
+msgid "Type"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__product_uom_id
+msgid "UoM"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#: model:ir.model.fields,field_description:mrp_sfc_availability_check.field_mrp_availability_line__workcenter_id
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_availability_check.report_mo_availability
+msgid "Work Center"
+msgstr ""
+
+#. module: mrp_sfc_availability_check
+#. odoo-python
+#: code:addons/mrp_sfc_availability_check/wizards/mrp_mps_report.py:0
+msgid "id"
+msgstr ""

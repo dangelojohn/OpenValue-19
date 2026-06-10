@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openvalue_stock_inventory_turnover_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:39+0000\n"
+"PO-Revision-Date: 2026-06-10 23:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__avg_inventory
+msgid "Avg Inventory"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model_terms:ir.ui.view,arch_db:openvalue_stock_inventory_turnover_report.view_stock_turnover_report_form
+msgid "Compute"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__create_uid
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__create_date
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__display_name
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__date_from
+msgid "From"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__id
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__id
+msgid "ID"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.actions.act_window,name:openvalue_stock_inventory_turnover_report.action_stock_turnover_report
+#: model:ir.ui.menu,name:openvalue_stock_inventory_turnover_report.menu_stock_turnover_report
+#: model_terms:ir.ui.view,arch_db:openvalue_stock_inventory_turnover_report.view_stock_turnover_report_form
+msgid "Inventory Turnover"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model,name:openvalue_stock_inventory_turnover_report.model_stock_turnover_report
+msgid "Inventory Turnover Report"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model,name:openvalue_stock_inventory_turnover_report.model_stock_turnover_report_line
+msgid "Inventory Turnover Report Line"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__write_uid
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__write_date
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__out_qty
+msgid "Outbound Qty"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__categ_id
+msgid "Product Category"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__report_id
+msgid "Report"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__line_ids
+msgid "Results"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report__date_to
+msgid "To"
+msgstr ""
+
+#. module: openvalue_stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:openvalue_stock_inventory_turnover_report.field_stock_turnover_report_line__turnover
+#: model_terms:ir.ui.view,arch_db:openvalue_stock_inventory_turnover_report.view_stock_turnover_report_form
+msgid "Turnover"
+msgstr ""

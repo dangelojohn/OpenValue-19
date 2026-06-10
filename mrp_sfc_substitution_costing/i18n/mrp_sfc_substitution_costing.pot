@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_sfc_substitution_costing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:34+0000\n"
+"PO-Revision-Date: 2026-06-10 23:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_sfc_substitution_costing
+#: model:ir.model.fields,field_description:mrp_sfc_substitution_costing.field_mrp_production__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_sfc_substitution_costing
+#: model:ir.model.fields,field_description:mrp_sfc_substitution_costing.field_mrp_production__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_sfc_substitution_costing
+#: model:ir.model,name:mrp_sfc_substitution_costing.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_sfc_substitution_costing
+#: model:ir.model.fields,help:mrp_sfc_substitution_costing.field_mrp_production__substitution_cost_delta
+msgid ""
+"Material-cost difference introduced by component substitutions (substitute "
+"standard price minus original, times quantity). This is the portion of the "
+"material variance due to substitution."
+msgstr ""
+
+#. module: mrp_sfc_substitution_costing
+#: model:ir.model.fields,field_description:mrp_sfc_substitution_costing.field_mrp_production__substitution_cost_delta
+msgid "Substitution Cost Impact"
+msgstr ""

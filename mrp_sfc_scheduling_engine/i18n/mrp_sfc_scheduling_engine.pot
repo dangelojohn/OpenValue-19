@@ -1,0 +1,306 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_sfc_scheduling_engine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:34+0000\n"
+"PO-Revision-Date: 2026-06-10 23:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__avg_wip
+msgid "Avg WIP"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__company_id
+msgid "Company"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid ""
+"Could not schedule all work orders (possible precedence cycle in SFC "
+"sequences). %s left unscheduled."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model_terms:ir.actions.act_window,help:mrp_sfc_scheduling_engine.action_mrp_scheduling_run
+msgid "Create a scheduling run"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__create_uid
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__create_date
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,help:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__objective
+msgid ""
+"Dispatching rule used by the optimizer:\n"
+"- Makespan: minimise time to finish all orders (longest first)\n"
+"- Tardiness: minimise lateness vs deadlines (earliest due first)\n"
+"- Sum Completion: minimise total completion time (shortest first)\n"
+"- Length / WIP: minimise flow time (release order)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__duration_hours
+msgid "Duration (h)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__date_start
+msgid "Horizon Start"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__id
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__write_uid
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__write_date
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__objective__wip
+msgid "Length / WIP"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__objective__makespan
+msgid "Makespan"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__makespan_hours
+msgid "Makespan (h)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model,name:mrp_sfc_scheduling_engine.model_mrp_production
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__production_id
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__production_ids
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Manufacturing Orders"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid "New"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid "No open work orders found to schedule."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,help:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__date_start
+msgid "No work order is scheduled to start before this moment."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__objective
+msgid "Objective Function"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model_terms:ir.actions.act_window,help:mrp_sfc_scheduling_engine.action_mrp_scheduling_run
+msgid ""
+"Pick an objective function and run the finite-capacity optimizer\n"
+"               over your open work orders."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__name
+msgid "Reference"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,help:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__production_ids
+msgid ""
+"Restrict scheduling to these orders. Leave empty to schedule every open work"
+" order."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Results (hours)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Run Optimizer"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_production.py:0
+msgid "SFC Scheduling Engine"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model,name:mrp_sfc_scheduling_engine.model_mrp_scheduling_run
+msgid "SFC Scheduling Engine Run"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model,name:mrp_sfc_scheduling_engine.model_mrp_scheduling_run_line
+msgid "SFC Scheduling Engine Run Line"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__sfc_sequence
+msgid "SFC Sequence"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__state__done
+msgid "Scheduled"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__date_planned_finished_wo
+msgid "Scheduled End"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__date_planned_start_wo
+msgid "Scheduled Start"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__line_ids
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Scheduled Work Orders"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.actions.act_window,name:mrp_sfc_scheduling_engine.action_mrp_scheduling_run
+#: model:ir.ui.menu,name:mrp_sfc_scheduling_engine.menu_mrp_scheduling_run
+msgid "Scheduling Engine"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__run_id
+msgid "Scheduling Run"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__state
+msgid "State"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__objective__sum_completion
+msgid "Sum Completion"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__sum_completion_hours
+msgid "Sum Completion (h)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields.selection,name:mrp_sfc_scheduling_engine.selection__mrp_scheduling_run__objective__tardiness
+msgid "Tardiness"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__tardiness_hours
+msgid "Tardiness (h)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid ""
+"This scheduling run has already been executed. Create a new run to re-"
+"optimise."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Total"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__total_tardiness_hours
+msgid "Total Tardiness (h)"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__workcenter_id
+msgid "Work Center"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run_line__workorder_id
+msgid "Work Order"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#: model:ir.model.fields,field_description:mrp_sfc_scheduling_engine.field_mrp_scheduling_run__workorder_count
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_scheduling_engine.view_mrp_scheduling_run_form
+msgid "Work Orders"
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid "Work orders found, but none have a work center."
+msgstr ""
+
+#. module: mrp_sfc_scheduling_engine
+#. odoo-python
+#: code:addons/mrp_sfc_scheduling_engine/models/mrp_scheduling_run.py:0
+msgid "id"
+msgstr ""

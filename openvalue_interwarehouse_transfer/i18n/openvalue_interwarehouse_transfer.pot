@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openvalue_interwarehouse_transfer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:34+0000\n"
+"PO-Revision-Date: 2026-06-10 23:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openvalue_interwarehouse_transfer
+#: model_terms:ir.ui.view,arch_db:openvalue_interwarehouse_transfer.view_interwarehouse_transfer_form
+msgid "Cancel"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__dest_warehouse_id
+msgid "Destination Warehouse"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__id
+msgid "ID"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#. odoo-python
+#: code:addons/openvalue_interwarehouse_transfer/wizards/interwarehouse_transfer.py:0
+#: model:ir.actions.act_window,name:openvalue_interwarehouse_transfer.action_interwarehouse_transfer
+#: model:ir.model,name:openvalue_interwarehouse_transfer.model_interwarehouse_transfer
+#: model:ir.ui.menu,name:openvalue_interwarehouse_transfer.menu_interwarehouse_transfer
+#: model_terms:ir.ui.view,arch_db:openvalue_interwarehouse_transfer.view_interwarehouse_transfer_form
+msgid "Interwarehouse Transfer"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#. odoo-python
+#: code:addons/openvalue_interwarehouse_transfer/wizards/interwarehouse_transfer.py:0
+msgid "No internal transfer operation type on the source warehouse."
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__product_id
+msgid "Product"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__product_uom_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#. odoo-python
+#: code:addons/openvalue_interwarehouse_transfer/wizards/interwarehouse_transfer.py:0
+msgid "Quantity must be positive."
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__scheduled_date
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__source_warehouse_id
+msgid "Source Warehouse"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#. odoo-python
+#: code:addons/openvalue_interwarehouse_transfer/wizards/interwarehouse_transfer.py:0
+msgid "Source and destination warehouses must differ."
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model_terms:ir.ui.view,arch_db:openvalue_interwarehouse_transfer.view_interwarehouse_transfer_form
+msgid "Transfer"
+msgstr ""
+
+#. module: openvalue_interwarehouse_transfer
+#: model:ir.model.fields,field_description:openvalue_interwarehouse_transfer.field_interwarehouse_transfer__product_uom_id
+msgid "Unit"
+msgstr ""

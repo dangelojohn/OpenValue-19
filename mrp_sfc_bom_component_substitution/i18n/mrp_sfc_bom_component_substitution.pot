@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_sfc_bom_component_substitution
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:33+0000\n"
+"PO-Revision-Date: 2026-06-10 23:33+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_sfc_bom_component_substitution
+#. odoo-python
+#: code:addons/mrp_sfc_bom_component_substitution/models/mrp_production.py:0
+msgid "%s component(s) substituted."
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model,name:mrp_sfc_bom_component_substitution.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model,name:mrp_sfc_bom_component_substitution.model_mrp_bom_line_substitute
+msgid "BoM Component Substitute"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__bom_line_id
+msgid "BoM Line"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#. odoo-python
+#: code:addons/mrp_sfc_bom_component_substitution/models/mrp_production.py:0
+msgid "Component Substitution"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_stock_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__id
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model,name:mrp_sfc_bom_component_substitution.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#. odoo-python
+#: code:addons/mrp_sfc_bom_component_substitution/models/mrp_production.py:0
+msgid "No short component had an available substitute."
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,help:mrp_sfc_bom_component_substitution.field_stock_move__original_product_id
+msgid "Original component this move was substituted away from."
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__sequence
+msgid "Priority"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model,name:mrp_sfc_bom_component_substitution.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_bom_component_substitution.view_mrp_production_form_substitute
+msgid "Substitute Components"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__product_id
+msgid "Substitute Product"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_production__substituted_move_count
+msgid "Substituted Components"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_stock_move__original_product_id
+msgid "Substituted From"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line__substitute_ids
+msgid "Substitutes"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__date_start
+msgid "Valid From"
+msgstr ""
+
+#. module: mrp_sfc_bom_component_substitution
+#: model:ir.model.fields,field_description:mrp_sfc_bom_component_substitution.field_mrp_bom_line_substitute__date_end
+msgid "Valid To"
+msgstr ""

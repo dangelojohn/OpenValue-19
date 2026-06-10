@@ -1,0 +1,172 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_sfc_bom_comparison
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:32+0000\n"
+"PO-Revision-Date: 2026-06-10 23:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison_line__status__added
+msgid "Added"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__bom_a_id
+msgid "BoM A"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__bom_b_id
+msgid "BoM B"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.actions.act_window,name:mrp_sfc_bom_comparison.action_mrp_bom_comparison
+#: model:ir.model,name:mrp_sfc_bom_comparison.model_mrp_bom_comparison
+#: model:ir.ui.menu,name:mrp_sfc_bom_comparison.menu_mrp_bom_comparison
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_bom_comparison.view_mrp_bom_comparison_form
+msgid "BoM Comparison"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model,name:mrp_sfc_bom_comparison.model_mrp_bom_comparison_line
+msgid "BoM Comparison Line"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model_terms:ir.ui.view,arch_db:mrp_sfc_bom_comparison.view_mrp_bom_comparison_form
+msgid "Compare"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__comparison_id
+msgid "Comparison"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__product_id
+msgid "Component"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__create_uid
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__create_date
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__qty_diff
+msgid "Delta"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__diff_count
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__line_ids
+msgid "Differences"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__display_name
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__id
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__write_uid
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__write_date
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__level
+msgid "Level"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison__comparison_mode
+msgid "Mode"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison__comparison_mode__level
+msgid "Multi-level Level by Level"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison__comparison_mode__summarized
+msgid "Multi-level Summarized"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__bom_path
+msgid "Path"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison_line__status__changed
+msgid "Qty Changed"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__qty_a
+msgid "Qty in A"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__qty_b
+msgid "Qty in B"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison_line__status__removed
+msgid "Removed"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#. odoo-python
+#: code:addons/mrp_sfc_bom_comparison/models/mrp_bom_comparison.py:0
+msgid "Select two different BoMs to compare."
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison__comparison_mode__single
+msgid "Single Level"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields,field_description:mrp_sfc_bom_comparison.field_mrp_bom_comparison_line__status
+msgid "Status"
+msgstr ""
+
+#. module: mrp_sfc_bom_comparison
+#: model:ir.model.fields.selection,name:mrp_sfc_bom_comparison.selection__mrp_bom_comparison_line__status__same
+msgid "Unchanged"
+msgstr ""

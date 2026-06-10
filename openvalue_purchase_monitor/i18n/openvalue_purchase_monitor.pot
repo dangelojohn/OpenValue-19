@@ -1,0 +1,56 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openvalue_purchase_monitor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 23:37+0000\n"
+"PO-Revision-Date: 2026-06-10 23:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openvalue_purchase_monitor
+#: model:ir.model.fields,field_description:openvalue_purchase_monitor.field_purchase_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model:ir.model.fields,field_description:openvalue_purchase_monitor.field_purchase_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model:ir.model.fields,field_description:openvalue_purchase_monitor.field_purchase_order_line__is_late
+#: model_terms:ir.ui.view,arch_db:openvalue_purchase_monitor.view_purchase_monitor_search
+msgid "Late"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model:ir.actions.act_window,name:openvalue_purchase_monitor.action_purchase_monitor
+#: model:ir.ui.menu,name:openvalue_purchase_monitor.menu_purchase_monitor
+#: model_terms:ir.ui.view,arch_db:openvalue_purchase_monitor.view_purchase_monitor_list
+#: model_terms:ir.ui.view,arch_db:openvalue_purchase_monitor.view_purchase_monitor_pivot
+#: model_terms:ir.ui.view,arch_db:openvalue_purchase_monitor.view_purchase_monitor_search
+msgid "Purchase Monitor"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model:ir.model,name:openvalue_purchase_monitor.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model:ir.model.fields,field_description:openvalue_purchase_monitor.field_purchase_order_line__qty_pending
+msgid "Qty to Receive"
+msgstr ""
+
+#. module: openvalue_purchase_monitor
+#: model_terms:ir.ui.view,arch_db:openvalue_purchase_monitor.view_purchase_monitor_search
+msgid "To Receive"
+msgstr ""
