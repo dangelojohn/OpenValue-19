@@ -15,6 +15,8 @@ class MrpProduction(models.Model):
         'External POs', compute='_compute_external_po_count')
     external_operation_count = fields.Integer(
         'External Operations', compute='_compute_external_operation_count')
+    external_operation_open_count = fields.Integer(
+        'Open External Operations', compute='_compute_external_operation_count')
 
     @api.depends('external_po_line_ids.order_id')
     def _compute_external_po_count(self):
@@ -22,11 +24,19 @@ class MrpProduction(models.Model):
             production.external_po_count = len(
                 production.external_po_line_ids.order_id)
 
-    @api.depends('workorder_ids.is_external')
+    @api.depends('workorder_ids.is_external', 'workorder_ids.state')
     def _compute_external_operation_count(self):
         for production in self:
-            production.external_operation_count = len(
-                production.workorder_ids.filtered('is_external'))
+            external = production.workorder_ids.filtered('is_external')
+            production.external_operation_count = len(external)
+            production.external_operation_open_count = len(
+                external.filtered(lambda w: w.state not in ('done', 'cancel')))
+
+    def action_complete_external_operations(self):
+        """Mark every open outsourced work order of the order as done so the MO
+        can be closed (the operation was performed by the subcontractor)."""
+        self.workorder_ids.action_external_done()
+        return True
 
     def action_create_external_pos(self):
         """Generate purchase orders for every external work order that does not

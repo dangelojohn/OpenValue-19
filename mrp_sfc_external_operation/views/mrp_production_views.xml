@@ -10,6 +10,9 @@
                 <button name="action_create_external_pos" type="object"
                         string="Create External POs"
                         invisible="external_operation_count == 0 or state in ('done', 'cancel')"/>
+                <button name="action_complete_external_operations" type="object"
+                        string="Complete Outsourced Ops"
+                        invisible="external_operation_open_count == 0 or state in ('draft', 'done', 'cancel')"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_external_pos" type="object"
