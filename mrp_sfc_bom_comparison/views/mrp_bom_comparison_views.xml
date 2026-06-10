@@ -23,6 +23,8 @@
                           decoration-danger="status == 'removed'"
                           decoration-warning="status == 'changed'"
                           decoration-muted="status == 'same'">
+                        <field name="level" optional="show"/>
+                        <field name="bom_path" optional="hide"/>
                         <field name="product_id"/>
                         <field name="qty_a"/>
                         <field name="qty_b"/>

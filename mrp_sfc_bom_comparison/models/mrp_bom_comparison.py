@@ -15,6 +15,7 @@ class MrpBomComparison(models.TransientModel):
     bom_b_id = fields.Many2one('mrp.bom', 'BoM B', required=True)
     comparison_mode = fields.Selection(
         [('single', 'Single Level'),
+         ('level', 'Multi-level Level by Level'),
          ('summarized', 'Multi-level Summarized')],
         string='Mode', default='single', required=True)
     line_ids = fields.One2many(
@@ -42,33 +43,60 @@ class MrpBomComparison(models.TransientModel):
                 result[line.product_id.id] += line.product_qty / (bom.product_qty or 1.0)
         return result
 
+    @staticmethod
+    def _diff_status(a, b):
+        if a and b:
+            return 'same' if float_compare(a, b, precision_digits=6) == 0 else 'changed'
+        return 'added' if b else 'removed'
+
+    def _compare_level(self, bom_a, bom_b, level, path, vals):
+        """Recursively compare the direct lines of two BoMs, descending into
+        manufactured sub-assemblies present on either side."""
+        a_lines = {l.product_id.id: l for l in bom_a.bom_line_ids} if bom_a else {}
+        b_lines = {l.product_id.id: l for l in bom_b.bom_line_ids} if bom_b else {}
+        for product in self.env['product.product'].browse(set(a_lines) | set(b_lines)):
+            la, lb = a_lines.get(product.id), b_lines.get(product.id)
+            qa = la.product_qty / (bom_a.product_qty or 1.0) if la else 0.0
+            qb = lb.product_qty / (bom_b.product_qty or 1.0) if lb else 0.0
+            vals.append({
+                'comparison_id': self.id,
+                'product_id': product.id,
+                'qty_a': qa,
+                'qty_b': qb,
+                'qty_diff': qb - qa,
+                'status': self._diff_status(qa, qb),
+                'level': level,
+                'bom_path': path or '/',
+            })
+            sub_a = la.child_bom_id if la else False
+            sub_b = lb.child_bom_id if lb else False
+            if sub_a or sub_b:
+                self._compare_level(
+                    sub_a, sub_b, level + 1,
+                    '%s/%s' % (path, product.display_name), vals)
+
     def action_compare(self):
         self.ensure_one()
         if self.bom_a_id == self.bom_b_id:
             raise UserError(_("Select two different BoMs to compare."))
         self.line_ids.unlink()
-        qty_a = self._component_qtys(self.bom_a_id)
-        qty_b = self._component_qtys(self.bom_b_id)
-        products = self.env['product.product'].browse(set(qty_a) | set(qty_b))
         vals = []
-        for product in products:
-            a = qty_a.get(product.id, 0.0)
-            b = qty_b.get(product.id, 0.0)
-            if a and b:
-                status = 'same' if float_compare(
-                    a, b, precision_digits=6) == 0 else 'changed'
-            elif b:
-                status = 'added'
-            else:
-                status = 'removed'
-            vals.append({
-                'comparison_id': self.id,
-                'product_id': product.id,
-                'qty_a': a,
-                'qty_b': b,
-                'qty_diff': b - a,
-                'status': status,
-            })
+        if self.comparison_mode == 'level':
+            self._compare_level(self.bom_a_id, self.bom_b_id, 0, '', vals)
+        else:
+            qty_a = self._component_qtys(self.bom_a_id)
+            qty_b = self._component_qtys(self.bom_b_id)
+            for product in self.env['product.product'].browse(set(qty_a) | set(qty_b)):
+                a = qty_a.get(product.id, 0.0)
+                b = qty_b.get(product.id, 0.0)
+                vals.append({
+                    'comparison_id': self.id,
+                    'product_id': product.id,
+                    'qty_a': a,
+                    'qty_b': b,
+                    'qty_diff': b - a,
+                    'status': self._diff_status(a, b),
+                })
         self.env['mrp.bom.comparison.line'].create(vals)
         return {
             'type': 'ir.actions.act_window',
@@ -82,11 +110,13 @@ class MrpBomComparison(models.TransientModel):
 class MrpBomComparisonLine(models.TransientModel):
     _name = 'mrp.bom.comparison.line'
     _description = 'BoM Comparison Line'
-    _order = 'status, id'
+    _order = 'level, status, id'
 
     comparison_id = fields.Many2one(
         'mrp.bom.comparison', required=True, ondelete='cascade')
     product_id = fields.Many2one('product.product', 'Component')
+    level = fields.Integer('Level', default=0)
+    bom_path = fields.Char('Path')
     qty_a = fields.Float('Qty in A', digits='Product Unit Of Measure')
     qty_b = fields.Float('Qty in B', digits='Product Unit Of Measure')
     qty_diff = fields.Float('Delta', digits='Product Unit Of Measure')
