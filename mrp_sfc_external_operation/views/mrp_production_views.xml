@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_production_form_external" model="ir.ui.view">
+        <field name="name">mrp.production.form.external</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_external_pos" type="object"
+                        string="Create External POs"
+                        invisible="external_operation_count == 0 or state in ('done', 'cancel')"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_external_pos" type="object"
+                        class="oe_stat_button" icon="fa-shopping-cart"
+                        invisible="external_po_count == 0">
+                    <field name="external_po_count" widget="statinfo"
+                           string="External POs"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
