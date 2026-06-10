@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- MO form: Check Availability button + Availability tab -->
+    <record id="view_mrp_production_form_availability" model="ir.ui.view">
+        <field name="name">mrp.production.form.availability</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_check_availability" type="object"
+                        string="Check Availability" class="oe_highlight"
+                        invisible="state in ('done', 'cancel')"/>
+                <field name="availability_state" widget="badge"
+                       decoration-success="availability_state == 'available'"
+                       decoration-danger="availability_state == 'shortage'"
+                       decoration-muted="availability_state == 'unknown'"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Availability" name="availability">
+                    <group>
+                        <group>
+                            <field name="material_available"/>
+                            <field name="capacity_available"/>
+                        </group>
+                        <group>
+                            <field name="availability_check_date"/>
+                        </group>
+                    </group>
+                    <field name="availability_line_ids" readonly="1">
+                        <list decoration-danger="is_shortage == True">
+                            <field name="check_type"/>
+                            <field name="product_id"/>
+                            <field name="required_qty"/>
+                            <field name="available_qty"/>
+                            <field name="shortage_qty"/>
+                            <field name="workcenter_id"/>
+                            <field name="required_hours"/>
+                            <field name="available_hours"/>
+                            <field name="shortage_hours"/>
+                            <field name="is_shortage"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- MPS result list -->
+    <record id="view_mps_production_list" model="ir.ui.view">
+        <field name="name">mrp.production.mps.list</field>
+        <field name="model">mrp.production</field>
+        <field name="arch" type="xml">
+            <list string="Master Production Plan" create="false"
+                  decoration-danger="availability_state == 'shortage'"
+                  decoration-success="availability_state == 'available'">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="date_start"/>
+                <field name="date_deadline"/>
+                <field name="material_available"/>
+                <field name="capacity_available"/>
+                <field name="availability_state" widget="badge"
+                       decoration-success="availability_state == 'available'"
+                       decoration-danger="availability_state == 'shortage'"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

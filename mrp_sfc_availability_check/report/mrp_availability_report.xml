@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_mo_availability" model="ir.actions.report">
+        <field name="name">Availability Check</field>
+        <field name="model">mrp.production</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mrp_sfc_availability_check.report_mo_availability</field>
+        <field name="report_file">mrp_sfc_availability_check.report_mo_availability</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_mo_availability">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Availability Check</h2>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <strong>Manufacturing Order:</strong>
+                                <span t-field="o.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Status:</strong>
+                                <span t-field="o.availability_state"/>
+                            </div>
+                        </div>
+                        <h4 class="mt-4">Material</h4>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th class="text-end">Required</th>
+                                    <th class="text-end">Available</th>
+                                    <th class="text-end">Shortage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.availability_line_ids.filtered(lambda l: l.check_type == 'material')" t-as="l">
+                                    <td><span t-field="l.product_id"/></td>
+                                    <td class="text-end"><span t-field="l.required_qty"/></td>
+                                    <td class="text-end"><span t-field="l.available_qty"/></td>
+                                    <td class="text-end"><span t-field="l.shortage_qty"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 class="mt-3">Capacity</h4>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Work Center</th>
+                                    <th class="text-end">Required (h)</th>
+                                    <th class="text-end">Available (h)</th>
+                                    <th class="text-end">Shortage (h)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.availability_line_ids.filtered(lambda l: l.check_type == 'capacity')" t-as="l">
+                                    <td><span t-field="l.workcenter_id"/></td>
+                                    <td class="text-end"><span t-field="l.required_hours"/></td>
+                                    <td class="text-end"><span t-field="l.available_hours"/></td>
+                                    <td class="text-end"><span t-field="l.shortage_hours"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
