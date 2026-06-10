@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_interwarehouse_transfer_form" model="ir.ui.view">
+        <field name="name">interwarehouse.transfer.form</field>
+        <field name="model">interwarehouse.transfer</field>
+        <field name="arch" type="xml">
+            <form string="Interwarehouse Transfer">
+                <group>
+                    <group>
+                        <field name="source_warehouse_id" options="{'no_create': True}"/>
+                        <field name="dest_warehouse_id" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="product_id" options="{'no_create': True}"/>
+                        <label for="product_uom_qty"/>
+                        <div class="o_row">
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom_id" groups="uom.group_uom"/>
+                        </div>
+                        <field name="scheduled_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_transfer" type="object" string="Transfer"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_interwarehouse_transfer" model="ir.actions.act_window">
+        <field name="name">Interwarehouse Transfer</field>
+        <field name="res_model">interwarehouse.transfer</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_interwarehouse_transfer"
+              name="Interwarehouse Transfer"
+              parent="stock.menu_stock_root"
+              action="action_interwarehouse_transfer"
+              sequence="95"
+              groups="stock.group_stock_user"/>
+
+</odoo>

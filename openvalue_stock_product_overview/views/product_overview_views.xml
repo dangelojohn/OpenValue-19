@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_overview_list" model="ir.ui.view">
+        <field name="name">product.stock.overview.list</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <list string="Stock Product Overview" create="false" edit="false">
+                <field name="default_code" optional="show"/>
+                <field name="name"/>
+                <field name="uom_id" optional="hide"/>
+                <field name="qty_available" string="On Hand"/>
+                <field name="incoming_qty" string="Incoming" optional="show"/>
+                <field name="outgoing_qty" string="Outgoing" optional="show"/>
+                <field name="virtual_available" string="Forecast"/>
+                <field name="free_qty" string="Free"/>
+                <field name="standard_price" string="Cost" optional="hide"/>
+                <field name="stock_onhand_value" string="On-hand Value" sum="Total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_product_overview_search" model="ir.ui.view">
+        <field name="name">product.stock.overview.search</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Stock Product Overview">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="categ_id"/>
+                <filter name="in_stock" string="In Stock"
+                        domain="[('qty_available', '&gt;', 0)]"/>
+                <filter name="negative_forecast" string="Negative Forecast"
+                        domain="[('virtual_available', '&lt;', 0)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_overview" model="ir.actions.act_window">
+        <field name="name">Stock Product Overview</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">list</field>
+        <field name="domain">[('is_storable', '=', True)]</field>
+        <field name="view_id" ref="view_product_overview_list"/>
+        <field name="search_view_id" ref="view_product_overview_search"/>
+    </record>
+
+    <menuitem id="menu_product_overview"
+              name="Stock Product Overview"
+              parent="stock.menu_warehouse_report"
+              action="action_product_overview"
+              sequence="50"
+              groups="stock.group_stock_user"/>
+
+</odoo>
