@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_mrp_scheduling_run" model="ir.sequence">
+        <field name="name">SFC Scheduling Run</field>
+        <field name="code">mrp.scheduling.run</field>
+        <field name="prefix">SCHED/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="view_mrp_scheduling_run_form" model="ir.ui.view">
+        <field name="name">mrp.scheduling.run.form</field>
+        <field name="model">mrp.scheduling.run</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_run" type="object" string="Run Optimizer"
+                            class="oe_highlight" invisible="state == 'done'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_workorders" type="object"
+                                class="oe_stat_button" icon="fa-cogs"
+                                invisible="workorder_count == 0">
+                            <field name="workorder_count" widget="statinfo" string="Work Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="objective" readonly="state == 'done'"/>
+                            <field name="date_start" readonly="state == 'done'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Results (hours)">
+                            <field name="makespan_hours"/>
+                            <field name="sum_completion_hours"/>
+                            <field name="total_tardiness_hours"/>
+                            <field name="avg_wip"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Manufacturing Orders" name="mos">
+                            <field name="production_ids" readonly="state == 'done'"
+                                   options="{'no_create': True}"/>
+                        </page>
+                        <page string="Scheduled Work Orders" name="lines">
+                            <field name="line_ids">
+                                <list>
+                                    <field name="production_id"/>
+                                    <field name="workorder_id"/>
+                                    <field name="workcenter_id"/>
+                                    <field name="sfc_sequence"/>
+                                    <field name="date_planned_start_wo"/>
+                                    <field name="date_planned_finished_wo"/>
+                                    <field name="duration_hours" sum="Total"/>
+                                    <field name="tardiness_hours" sum="Total"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mrp_scheduling_run_list" model="ir.ui.view">
+        <field name="name">mrp.scheduling.run.list</field>
+        <field name="model">mrp.scheduling.run</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="objective"/>
+                <field name="date_start"/>
+                <field name="workorder_count"/>
+                <field name="makespan_hours"/>
+                <field name="total_tardiness_hours"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_mrp_scheduling_run" model="ir.actions.act_window">
+        <field name="name">Scheduling Engine</field>
+        <field name="res_model">mrp.scheduling.run</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a scheduling run</p>
+            <p>Pick an objective function and run the finite-capacity optimizer
+               over your open work orders.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mrp_scheduling_run"
+              name="Scheduling Engine"
+              parent="mrp.menu_mrp_root"
+              action="action_mrp_scheduling_run"
+              sequence="55"
+              groups="mrp.group_mrp_user"/>
+
+</odoo>
