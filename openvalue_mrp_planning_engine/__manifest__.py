@@ -28,6 +28,7 @@ Capacity Load, Make-to-Order and Subcontracting modules build on it.
     'depends': ['mrp', 'purchase_stock'],
     'data': [
         'security/ir.model.access.csv',
+        'security/mrp_planning_security.xml',
         'views/mrp_planning_run_views.xml',
     ],
     'application': False,

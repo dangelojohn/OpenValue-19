@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openvalue_mrp_planning_demand
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260504\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 12:56+0000\n"
+"PO-Revision-Date: 2026-06-10 12:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openvalue_mrp_planning_demand
+#: model:ir.model.fields,help:openvalue_mrp_planning_demand.field_mrp_planning_run__include_sales_demand
+msgid "Add planned supply to cover open sales-order demand."
+msgstr ""
+
+#. module: openvalue_mrp_planning_demand
+#: model:ir.model.fields,field_description:openvalue_mrp_planning_demand.field_mrp_planning_run__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: openvalue_mrp_planning_demand
+#: model:ir.model.fields,field_description:openvalue_mrp_planning_demand.field_mrp_planning_run__id
+msgid "ID"
+msgstr ""
+
+#. module: openvalue_mrp_planning_demand
+#: model:ir.model.fields,field_description:openvalue_mrp_planning_demand.field_mrp_planning_run__include_sales_demand
+msgid "Include Sales Demand"
+msgstr ""
+
+#. module: openvalue_mrp_planning_demand
+#: model:ir.model,name:openvalue_mrp_planning_demand.model_mrp_planning_run
+msgid "MRP Planning Run"
+msgstr ""

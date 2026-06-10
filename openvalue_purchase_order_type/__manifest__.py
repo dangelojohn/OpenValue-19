@@ -21,6 +21,7 @@ reported per type.
     'depends': ['purchase'],
     'data': [
         'security/ir.model.access.csv',
+        'security/purchase_order_type_security.xml',
         'views/purchase_order_type_views.xml',
         'views/purchase_order_views.xml',
     ],
