@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_mrp_planning_run" model="ir.sequence">
+        <field name="name">MRP Planning Run</field>
+        <field name="code">mrp.planning.run</field>
+        <field name="prefix">PLAN/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="view_mrp_planning_run_form" model="ir.ui.view">
+        <field name="name">mrp.planning.run.form</field>
+        <field name="model">mrp.planning.run</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_run" type="object" string="Run Planning"
+                            class="oe_highlight" invisible="state == 'done'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="date" readonly="state == 'done'"/>
+                            <field name="warehouse_id" readonly="state == 'done'"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="line_count"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <list>
+                            <field name="product_id"/>
+                            <field name="forecast_qty"/>
+                            <field name="min_qty"/>
+                            <field name="max_qty"/>
+                            <field name="suggested_qty"/>
+                            <field name="supply_type"/>
+                            <field name="planned_date"/>
+                            <field name="released"/>
+                            <field name="generated_ref"/>
+                            <button name="action_release" type="object" string="Release"
+                                    icon="fa-check" invisible="released == True"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mrp_planning_run_list" model="ir.ui.view">
+        <field name="name">mrp.planning.run.list</field>
+        <field name="model">mrp.planning.run</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="warehouse_id"/>
+                <field name="line_count"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_mrp_planning_run" model="ir.actions.act_window">
+        <field name="name">Planning Engine</field>
+        <field name="res_model">mrp.planning.run</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_mrp_planning_run"
+              name="Planning Engine"
+              parent="mrp.menu_mrp_root"
+              action="action_mrp_planning_run"
+              sequence="58"
+              groups="mrp.group_mrp_user"/>
+
+</odoo>
