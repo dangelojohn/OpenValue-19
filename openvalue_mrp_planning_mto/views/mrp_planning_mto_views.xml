@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add MTO columns to the planning run line list -->
+    <record id="view_mrp_planning_run_form_mto" model="ir.ui.view">
+        <field name="name">mrp.planning.run.form.mto</field>
+        <field name="model">mrp.planning.run</field>
+        <field name="inherit_id" ref="openvalue_mrp_planning_engine.view_mrp_planning_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='generated_ref']" position="after">
+                <field name="scheduled_date"/>
+                <field name="is_delayed"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- MTO Monitor: released planning lines -->
+    <record id="view_mrp_planning_mto_list" model="ir.ui.view">
+        <field name="name">mrp.planning.line.mto.list</field>
+        <field name="model">mrp.planning.line</field>
+        <field name="arch" type="xml">
+            <list string="MTO Monitor" create="false" decoration-danger="is_delayed == True">
+                <field name="run_id"/>
+                <field name="product_id"/>
+                <field name="supply_type"/>
+                <field name="suggested_qty"/>
+                <field name="planned_date"/>
+                <field name="scheduled_date"/>
+                <field name="is_delayed"/>
+                <field name="generated_ref"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_mrp_planning_mto" model="ir.actions.act_window">
+        <field name="name">MTO Monitor</field>
+        <field name="res_model">mrp.planning.line</field>
+        <field name="view_mode">list</field>
+        <field name="domain">[('released', '=', True)]</field>
+        <field name="view_id" ref="view_mrp_planning_mto_list"/>
+    </record>
+
+    <menuitem id="menu_mrp_planning_mto"
+              name="MTO Monitor"
+              parent="mrp.menu_mrp_root"
+              action="action_mrp_planning_mto"
+              sequence="59"
+              groups="mrp.group_mrp_user"/>
+
+</odoo>

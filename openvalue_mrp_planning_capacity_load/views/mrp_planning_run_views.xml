@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_planning_run_form_capacity" model="ir.ui.view">
+        <field name="name">mrp.planning.run.form.capacity</field>
+        <field name="model">mrp.planning.run</field>
+        <field name="inherit_id" ref="openvalue_mrp_planning_engine.view_mrp_planning_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='suggested_qty']" position="after">
+                <field name="required_hours" sum="Total Hours"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
