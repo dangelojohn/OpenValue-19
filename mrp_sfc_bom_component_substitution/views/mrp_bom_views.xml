@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- BoM line form: substitutes section -->
+    <record id="view_mrp_bom_line_form_substitute" model="ir.ui.view">
+        <field name="name">mrp.bom.line.form.substitute</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_line_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="substitute_ids" nolabel="0" colspan="2">
+                    <list editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="product_id"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </list>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- MO: Substitute Components action -->
+    <record id="view_mrp_production_form_substitute" model="ir.ui.view">
+        <field name="name">mrp.production.form.substitute</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_substitute_components" type="object"
+                        string="Substitute Components"
+                        invisible="state in ('draft', 'done', 'cancel')"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
