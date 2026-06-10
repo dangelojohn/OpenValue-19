@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
-from datetime import datetime
 from datetime import date
+
+from odoo import fields, models, _
+from odoo.exceptions import UserError
 
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
-
 
     closure_state = fields.Boolean('Financial Closure', copy=False, default=False)
     # overheads
@@ -17,47 +16,30 @@ class MrpProduction(models.Model):
     ovh_product_cost = fields.Float('OVH Finished Product Cost', digits='Product Price', readonly=True, copy=False)
     ovh_components_cost = fields.Float('OVH Components Cost', digits='Product Price', readonly=True, copy=False)
     industrial_cost = fields.Float('Actual Full Industrial Cost', digits='Product Price', readonly=True, copy=False)
-    industrial_cost_unit = fields.Float(' Actual Full Industrial Unit Cost', digits='Product Price', aggregator="avg", readonly=True, copy=False)
+    industrial_cost_unit = fields.Float('Actual Full Industrial Unit Cost', digits='Product Price', aggregator="avg", readonly=True, copy=False)
 
+    # -------------------------------------------------------------------------
     def button_mark_done(self):
-        action = super().button_mark_done()
+        res = super().button_mark_done()
         for production in self:
-            # super() may return a wizard (backorder / immediate production) and
-            # leave the MO not actually done; only purge analytic lines once done.
+            # super() may return a wizard (immediate production / backorder);
+            # only clean up native analytic lines once the MO is really done.
             if production.state != 'done':
                 continue
-            # v19: the analytic-line links are plural recordsets
-            # (stock.move.analytic_account_line_ids, workorder.mo_analytic_account_line_ids);
-            # operate on them directly rather than re-browsing a single id.
             production.move_raw_ids.analytic_account_line_ids.sudo().unlink()
-            production.workorder_ids.mo_analytic_account_line_ids.sudo().unlink()
-        return action
+            (production.workorder_ids.mo_analytic_account_line_ids
+             | production.workorder_ids.wc_analytic_account_line_ids).sudo().unlink()
+        return res
 
-    def button_closure(self):
-        for record in self:
-            # Idempotency guard: re-running would post a second full set of variance
-            # + overhead entries. Stop before posting anything.
-            if record.closure_state:
-                raise UserError(_(
-                    "Manufacturing Order %s is already financially closed.",
-                    record.display_name))
-            # Fail fast on incomplete accounting configuration rather than leaving a
-            # half-posted batch behind.
-            record._check_closure_configuration()
-            qty_produced = record._get_qty_produced()
-            # variances
-            record._planned_variance_postings(qty_produced)
-            record._material_costs_variance_postings(qty_produced)
-            record._direct_costs_variance_postings(qty_produced)
-            # overheads
-            record._wc_ovh_analytic_postings()
-            record._bom_ovh_analytic_postings()
-            record.industrial_cost = record.direct_cost + record.ovh_var_direct_cost + record.ovh_fixed_direct_cost + record.ovh_product_cost + record.ovh_components_cost
-            record.industrial_cost_unit = record.industrial_cost / qty_produced
-            record.closure_state = True
-        return True
+    def _get_final_date(self):
+        self.ensure_one()
+        if self.date_actual_finished_wo:
+            return self.date_actual_finished_wo.date()
+        return date.today()
 
-    def _check_closure_configuration(self):
+    def _check_closure_config(self):
+        """Fail fast before any posting if the financial configuration is
+        incomplete, to avoid a half-posted closure."""
         self.ensure_one()
         company = self.company_id
         missing = []
@@ -69,352 +51,185 @@ class MrpProduction(models.Model):
             missing.append(_("Components Variance Cost Account"))
         if not company.other_variances_account_id:
             missing.append(_("Direct Variance Cost Account"))
+        if not self.product_id.property_stock_production.valuation_account_id:
+            missing.append(_("Production Location Valuation Account"))
         if missing:
             raise UserError(_(
-                "Cannot close Manufacturing Order %(mo)s: the following accounting "
-                "settings are not configured on company %(company)s:\n- %(items)s",
-                mo=self.display_name,
-                company=company.display_name,
-                items="\n- ".join(missing),
-            ))
+                "Cannot close the manufacturing order %(name)s: the following "
+                "configuration is missing:\n- %(items)s",
+                name=self.name, items="\n- ".join(missing)))
 
-    def _get_final_date(self):
-        final_date = False
+    def button_closure(self):
         for record in self:
-            if record.date_actual_finished_wo:
-                final_date = record.date_actual_finished_wo.date()
-            else:
-                final_date = date.today()
-        return final_date
-
-    # production planned variance costs posting
-    def _planned_variance_postings(self, quantity):
-        standard_cost = planned_cost = 0.0
-        for record in self:
-            final_date = record._get_final_date()
-            standard_cost = record.std_prod_cost
-            planned_cost = record.planned_direct_cost_unit
-            delta = (planned_cost - standard_cost) * quantity
-            desc_bom = str(record.name)
-            if delta < 0.0:
-                id_created_header = self.env['account.move'].create({
-                'journal_id' : record.company_id.manufacturing_journal_id.id,
-                'date': final_date,
-                'ref' : "Planned Costs Variance",
-                'company_id': record.company_id.id,
-                'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.planned_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': - delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_planned_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': - delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
-            elif delta > 0.0:
-                id_created_header = self.env['account.move'].create({
-                'journal_id' : record.company_id.manufacturing_journal_id.id,
-                'date': final_date,
-                'ref' : "Planned Costs Variance",
-                'company_id': record.company_id.id,
-                'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_planned_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.planned_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
+            if record.closure_state:
+                raise UserError(_(
+                    "Manufacturing order %s has already been financially closed.", record.name))
+            record._check_closure_config()
+            qty_produced = record._get_qty_produced()
+            # variances
+            record._planned_variance_postings(qty_produced)
+            record._material_costs_variance_postings(qty_produced)
+            record._direct_costs_variance_postings(qty_produced)
+            # overheads
+            record._wc_ovh_analytic_postings()
+            record._bom_ovh_analytic_postings()
+            record.industrial_cost = (record.direct_cost + record.ovh_var_direct_cost
+                                      + record.ovh_fixed_direct_cost + record.ovh_product_cost
+                                      + record.ovh_components_cost)
+            record.industrial_cost_unit = record.industrial_cost / qty_produced
+            record.closure_state = True
         return True
 
-    # production material and by product variance costs posting
+    # --- shared variance posting helper --------------------------------------
+    def _post_variance_entry(self, ref, variance_account, analytic_account, delta, quantity, final_date):
+        """Post a balanced 2-line variance entry.
+
+        ``delta`` is (actual - planned): a negative delta credits the variance
+        account and debits the production valuation account; a positive delta
+        does the reverse.  The valuation-side line always carries the analytic
+        distribution and the move always back-references the MO.
+        """
+        self.ensure_one()
+        if not delta:
+            return
+        valuation_account = self.product_id.property_stock_production.valuation_account_id
+        distribution = {analytic_account.id: 100} if analytic_account else False
+        move = self.env['account.move'].create({
+            'journal_id': self.company_id.manufacturing_journal_id.id,
+            'date': final_date,
+            'ref': ref,
+            'company_id': self.company_id.id,
+            'manufacture_order_id': self.id,
+        })
+        AML = self.env['account.move.line'].with_context(check_move_validity=False)
+        amount = abs(delta)
+        variance_vals = {
+            'move_id': move.id,
+            'account_id': variance_account.id,
+            'product_id': self.product_id.id,
+            'name': ref,
+            'quantity': quantity,
+            'product_uom_id': self.product_uom_id.id,
+        }
+        valuation_vals = {
+            'move_id': move.id,
+            'account_id': valuation_account.id,
+            'analytic_distribution': distribution,
+            'product_id': self.product_id.id,
+            'name': ref,
+            'quantity': quantity,
+            'product_uom_id': self.product_uom_id.id,
+        }
+        if delta < 0.0:
+            variance_vals.update({'credit': amount, 'debit': 0.0})
+            valuation_vals.update({'credit': 0.0, 'debit': amount})
+        else:
+            valuation_vals.update({'credit': amount, 'debit': 0.0})
+            variance_vals.update({'credit': 0.0, 'debit': amount})
+        AML.create(variance_vals)
+        AML.create(valuation_vals)
+        move.action_post()
+
+    def _planned_variance_postings(self, quantity):
+        for record in self:
+            delta = (record.planned_direct_cost_unit - record.std_prod_cost) * quantity
+            record._post_variance_entry(
+                _("Planned Costs Variance"),
+                record.company_id.planned_variances_account_id,
+                record.bom_id.costs_planned_variances_analytic_account_id,
+                delta, quantity, record._get_final_date())
+
     def _material_costs_variance_postings(self, quantity):
         for record in self:
-            # accumulators reset per record (were initialised once before the loop,
-            # leaking running totals across a multi-MO recordset).
-            mat_actual_amount = mat_planned_amount = matamount = receiptamount = by_product_amount = 0.0
-            final_date = record._get_final_date()
-            # v19: product.type no longer has 'product'; storable goods are flagged
-            # by is_storable.
-            raw_moves = record.move_raw_ids.filtered(lambda r: (r.state == 'done' and r.product_id.is_storable))
+            matamount = receiptamount = 0.0
+            raw_moves = record.move_raw_ids.filtered(
+                lambda r: r.state == 'done' and r.product_id.is_storable)
             for move in raw_moves:
                 matamount += move.product_id.standard_price * move.product_qty
-            finished_moves = record.move_finished_ids.filtered(lambda r: (r.state == 'done' and r.product_id.is_storable))
+            finished_moves = record.move_finished_ids.filtered(
+                lambda r: r.state == 'done' and r.product_id.is_storable)
             for move in finished_moves:
                 receiptamount += move.product_id.standard_price * move.product_qty
-            if receiptamount > 0.0:
-                by_product_amount = receiptamount - record.std_prod_cost * quantity
-            mat_actual_amount = matamount - by_product_amount
-            mat_planned_amount = (record.planned_mat_cost_unit - record.planned_byproduct_amount_unit) * quantity
-            delta = mat_actual_amount - mat_planned_amount
-            desc_bom = str(record.name)
-            if delta < 0.0:
-                id_created_header = self.env['account.move'].create({
-                    'journal_id' : record.company_id.manufacturing_journal_id.id,
-                    'date': final_date,
-                    'ref' : "Material and By Products Variance",
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.material_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': - delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_material_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': - delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
-            elif delta > 0.0:
-                id_created_header = self.env['account.move'].create({
-                    'journal_id' : record.company_id.manufacturing_journal_id.id,
-                    'date': final_date,
-                    'ref' : "Material and By Products Variance",
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_material_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.material_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
-        return True
+            by_product_amount = (receiptamount - record.std_prod_cost * quantity) if receiptamount > 0.0 else 0.0
+            mat_actual = matamount - by_product_amount
+            mat_planned = (record.planned_mat_cost_unit - record.planned_byproduct_amount_unit) * quantity
+            record._post_variance_entry(
+                _("Material and By Products Variance"),
+                record.company_id.material_variances_account_id,
+                record.bom_id.costs_material_variances_analytic_account_id,
+                mat_actual - mat_planned, quantity, record._get_final_date())
 
-    # production direct variance costs posting
     def _direct_costs_variance_postings(self, quantity):
         for record in self:
-            # accumulators reset per record (see _material_costs_variance_postings).
-            direct_actual_amount = direct_planned_amount = 0.0
-            final_date = record._get_final_date()
-            direct_actual_amount = (record.var_cost_unit + record.fixed_cost_unit) * quantity
-            direct_planned_amount =  (record.planned_var_cost_unit + record.planned_fixed_cost_unit) * quantity
-            delta = direct_actual_amount - direct_planned_amount
-            desc_bom = str(record.name)
-            if delta < 0.0:
-                id_created_header = self.env['account.move'].create({
-                    'journal_id' : record.company_id.manufacturing_journal_id.id,
-                    'date': final_date,
-                    'ref' : "Direct Costs Variance",
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.other_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': - delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_direct_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': - delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
-            elif delta > 0.0:
-                id_created_header = self.env['account.move'].create({
-                    'journal_id' : record.company_id.manufacturing_journal_id.id,
-                    'date': final_date,
-                    'ref' : "Direct Costs Variance",
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
-                id_credit_item = self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.product_id.property_stock_production.valuation_account_id.id,
-                    'analytic_distribution': {record.bom_id.costs_direct_variances_analytic_account_id.id: 100},
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': delta,
-                    'debit': 0.0,
-                    #'manufacture_order_id': record.id,
-                })
-                id_debit_item= self.env['account.move.line'].with_context(check_move_validity=False).create({
-                    'move_id' : id_created_header.id,
-                    'account_id': record.company_id.other_variances_account_id.id,
-                    'product_id': record.product_id.id,
-                    'name' : desc_bom,
-                    'quantity': quantity,
-                    'product_uom_id': record.product_uom_id.id,
-                    'credit': 0.0,
-                    'debit': delta,
-                    #'manufacture_order_id': record.id,
-                })
-                id_created_header.action_post()
-        return True
+            direct_actual = (record.var_cost_unit + record.fixed_cost_unit) * quantity
+            direct_planned = (record.planned_var_cost_unit + record.planned_fixed_cost_unit) * quantity
+            record._post_variance_entry(
+                _("Direct Costs Variance"),
+                record.company_id.other_variances_account_id,
+                record.bom_id.costs_direct_variances_analytic_account_id,
+                direct_actual - direct_planned, quantity, record._get_final_date())
 
+    # --- overhead analytic postings ------------------------------------------
     def _wc_ovh_analytic_postings(self):
         for record in self:
             final_date = record._get_final_date()
-            # per-record running totals for the stored fields
-            total_varamount = 0.0
-            total_fixedamount = 0.0
+            total_var = total_fixed = 0.0
             for workorder in record.workorder_ids:
-                # per-workorder amounts: reset each iteration so the analytic line
-                # posted for a workorder reflects ONLY that workorder. (Previously
-                # these accumulated across workorders but were posted inside the
-                # loop, so WO2 posted WO1+WO2, WO3 posted WO1+WO2+WO3, etc.)
-                varamount = 0.0
-                fixedamount = 0.0
-                desc_wo = str(record.name) + '-' + str(workorder.workcenter_id.name) + '-' + str(workorder.name)
+                workcenter = workorder.workcenter_id
+                desc_wo = '%s-%s-%s' % (record.name, workcenter.name, workorder.name)
+                wo_var = wo_fixed = 0.0
                 for time in workorder.time_ids:
                     if time.overall_duration:
-                        varamount += time.working_duration * workorder.workcenter_id.costs_hour / 60 * workorder.workcenter_id.costs_overhead_variable_percentage / 100
-                        fixedamount += (time.setup_duration + time.teardown_duration) * workorder.workcenter_id.costs_hour_fixed / 60 * workorder.workcenter_id.costs_overhead_fixed_percentage / 100
+                        wo_var += (time.working_duration * workcenter.costs_hour / 60.0
+                                   * workcenter.costs_overhead_variable_percentage / 100.0)
+                        wo_fixed += ((time.setup_duration + time.teardown_duration) * workcenter.costs_hour_fixed / 60.0
+                                     * workcenter.costs_overhead_fixed_percentage / 100.0)
                     else:
-                        varamount += time.duration * workorder.workcenter_id.costs_hour / 60 * workorder.workcenter_id.costs_overhead_variable_percentage / 100
-                # fixed direct overhead cost posting
-                if fixedamount:
-                    id_created= self.env['account.analytic.line'].create({
-                        'name': desc_wo,
-                        'account_id': workorder.workcenter_id.analytic_account_id.id,
-                        'ref': "OVH fixed direct costs",
-                        'date': final_date,
-                        'product_id': record.product_id.id,
-                        'amount': - fixedamount,
-                        'unit_amount': workorder.qty_output_wo,
-                        'product_uom_id': record.product_uom_id.id,
-                        'company_id': workorder.workcenter_id.company_id.id,
-                        'manufacture_order_id': record.id,
-                    })
-                # variable direct overhead cost posting
-                if varamount:
-                    id_created= self.env['account.analytic.line'].create({
-                        'name': desc_wo,
-                        'account_id': workorder.workcenter_id.analytic_account_id.id,
-                        'ref': "OVH variable direct costs",
-                        'date': final_date,
-                        'product_id': record.product_id.id,
-                        'amount': - varamount,
-                        'unit_amount': workorder.qty_output_wo,
-                        'product_uom_id': record.product_uom_id.id,
-                        'company_id': workorder.workcenter_id.company_id.id,
-                        'manufacture_order_id': record.id,
-                    })
-                total_varamount += varamount
-                total_fixedamount += fixedamount
-            record.ovh_var_direct_cost = total_varamount
-            record.ovh_fixed_direct_cost = total_fixedamount
-        return True
+                        wo_var += (time.duration * workcenter.costs_hour / 60.0
+                                   * workcenter.costs_overhead_variable_percentage / 100.0)
+                if wo_fixed:
+                    self.env['account.analytic.line'].create(record._ovh_analytic_vals(
+                        desc_wo, workcenter.analytic_account_id, _("OVH fixed direct costs"),
+                        final_date, -wo_fixed, workorder.qty_output_wo, workcenter.company_id))
+                if wo_var:
+                    self.env['account.analytic.line'].create(record._ovh_analytic_vals(
+                        desc_wo, workcenter.analytic_account_id, _("OVH variable direct costs"),
+                        final_date, -wo_var, workorder.qty_output_wo, workcenter.company_id))
+                total_var += wo_var
+                total_fixed += wo_fixed
+            record.ovh_var_direct_cost = total_var
+            record.ovh_fixed_direct_cost = total_fixed
 
     def _bom_ovh_analytic_postings(self):
-        ovhproductcost = ovhcomponentscost = 0.0
         for record in self:
             final_date = record._get_final_date()
-            desc_bom = str(record.name)
-            ovhproductcost = record.direct_cost * record.bom_id.costs_overhead_product_percentage / 100
-            ovhcomponentscost = record.mat_cost * record.bom_id.costs_overhead_components_percentage / 100
-            # overhead product cost posting
+            ovhproductcost = record.direct_cost * record.bom_id.costs_overhead_product_percentage / 100.0
+            ovhcomponentscost = record.mat_cost * record.bom_id.costs_overhead_components_percentage / 100.0
             if ovhproductcost:
-                id_created= self.env['account.analytic.line'].create({
-                    'name': desc_bom,
-                    'account_id': record.bom_id.overhead_analytic_account_id.id,
-                    'ref': "OVH production costs",
-                    'date': final_date,
-                    'product_id': record.product_id.id,
-                    'amount': - ovhproductcost,
-                    'unit_amount': record.product_qty,
-                    'product_uom_id': record.product_uom_id.id,
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
-            # overhead components cost posting
+                self.env['account.analytic.line'].create(record._ovh_analytic_vals(
+                    record.name, record.bom_id.overhead_analytic_account_id, _("OVH production costs"),
+                    final_date, -ovhproductcost, record.product_qty, record.company_id))
             if ovhcomponentscost:
-                id_created= self.env['account.analytic.line'].create({
-                    'name': desc_bom,
-                    'account_id': record.bom_id.overhead_analytic_account_id.id,
-                    'ref': "OVH components costs",
-                    'date': final_date,
-                    'product_id': record.product_id.id,
-                    'amount': - ovhcomponentscost,
-                    'unit_amount': record.product_qty,
-                    'product_uom_id': record.product_uom_id.id,
-                    'company_id': record.company_id.id,
-                    'manufacture_order_id': record.id,
-                })
+                self.env['account.analytic.line'].create(record._ovh_analytic_vals(
+                    record.name, record.bom_id.overhead_analytic_account_id, _("OVH components costs"),
+                    final_date, -ovhcomponentscost, record.product_qty, record.company_id))
             record.ovh_product_cost = ovhproductcost
             record.ovh_components_cost = ovhcomponentscost
-        return True
 
+    def _ovh_analytic_vals(self, name, analytic_account, ref, final_date, amount, unit_amount, company):
+        self.ensure_one()
+        vals = {
+            'name': name,
+            'ref': ref,
+            'date': final_date,
+            'product_id': self.product_id.id,
+            'amount': amount,
+            'unit_amount': unit_amount,
+            'product_uom_id': self.product_uom_id.id,
+            'company_id': company.id,
+            'manufacture_order_id': self.id,
+            'category': 'manufacturing_order',
+        }
+        if analytic_account:
+            vals[analytic_account.plan_id._column_name()] = analytic_account.id
+        return vals
