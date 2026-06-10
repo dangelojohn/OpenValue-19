@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_bom_comparison_form" model="ir.ui.view">
+        <field name="name">mrp.bom.comparison.form</field>
+        <field name="model">mrp.bom.comparison</field>
+        <field name="arch" type="xml">
+            <form string="BoM Comparison">
+                <group>
+                    <group>
+                        <field name="bom_a_id" options="{'no_create': True}"/>
+                        <field name="bom_b_id" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="comparison_mode"/>
+                        <field name="diff_count"/>
+                    </group>
+                </group>
+                <button name="action_compare" type="object" string="Compare"
+                        class="oe_highlight"/>
+                <field name="line_ids" readonly="1" nolabel="1" colspan="2">
+                    <list decoration-info="status == 'added'"
+                          decoration-danger="status == 'removed'"
+                          decoration-warning="status == 'changed'"
+                          decoration-muted="status == 'same'">
+                        <field name="product_id"/>
+                        <field name="qty_a"/>
+                        <field name="qty_b"/>
+                        <field name="qty_diff"/>
+                        <field name="status" widget="badge"
+                               decoration-info="status == 'added'"
+                               decoration-danger="status == 'removed'"
+                               decoration-warning="status == 'changed'"/>
+                    </list>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_bom_comparison" model="ir.actions.act_window">
+        <field name="name">BoM Comparison</field>
+        <field name="res_model">mrp.bom.comparison</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_mrp_bom_comparison"
+              name="BoM Comparison"
+              parent="mrp.menu_mrp_root"
+              action="action_mrp_bom_comparison"
+              sequence="57"
+              groups="mrp.group_mrp_user"/>
+
+</odoo>
